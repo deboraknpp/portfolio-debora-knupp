@@ -10,17 +10,21 @@ está em português (pt-BR) — comentários, textos e documentação seguem ess
 
 ## Comandos
 
-Não há build, testes nem lint. O que existe é:
+Não há build, testes nem lint — nem `server.js` no repositório, apesar de versões
+antigas deste arquivo o citarem. Para servir localmente, qualquer servidor estático
+serve:
 
 ```bash
-# Servir em HTTP local (NÃO abra o index.html com duplo clique — ver abaixo)
-node /caminho/para/server.js       # servidor estático simples, porta 5173
+npx serve .          # ou python -m http.server 5173
 ```
 
-**Sempre teste em `http://localhost`, nunca em `file:///`.** O player de vídeo usa
-embed do YouTube, que rejeita origens `file://` com **erro 153** e mostra uma tela de
-erro no lugar do vídeo. O erro não é do código: em HTTP (localhost, Netlify ou GitHub
-Pages) o mesmo embed funciona.
+**Nunca abra o `index.html` com duplo clique.** Em `file:///` o embed do YouTube
+rejeita a origem com **erro 153** e mostra uma tela de erro no lugar do vídeo. Não é
+bug do código: em HTTP (localhost ou Netlify) o mesmo embed funciona.
+
+Na prática o site já está no ar, então o mais rápido é conferir direto lá — ver
+"Deploy" no fim deste arquivo. **O titular prefere conferir o visual por conta
+própria:** não suba servidor nem abra o navegador sem ele pedir.
 
 Antes de assumir que um vídeo do YouTube não pode ser incorporado, confirme na fonte:
 
@@ -77,6 +81,7 @@ some, vídeo não toca):
 | `assets/fotos/hero.jpg`, `hero-2.jpg`, `hero-3.jpg` | carrossel do hero |
 | `assets/fotos/perfil.jpg` | foto da seção Sobre |
 | `assets/fotos/NOME.jpeg` + `.work__thumb--NOME` no CSS | capa de cada trabalho em Destaques |
+| `assets/curriculo-debora-knupp.pdf` | currículo, link na seção Contato (fora de `fotos/`, na raiz de `assets/`) |
 
 Toda foto do site mora direto em `assets/fotos/`, sem subpasta. Ao lado dela ficam
 só duas outras pastas: `assets/reels/` com os vídeos publicados e
@@ -115,10 +120,18 @@ Algumas regras estão sem uso **de propósito** — `.post__overlay`, `.section_
 `.shot__cap` — porque dependem só de conteúdo que ainda não chegou (métricas reais,
 legendas). Não remova como se fosse código morto.
 
+Duas outras ficaram órfãs numa edição do hero (agosto/2026), não por decisão de
+design: `.hero__text` (o parágrafo de descrição, removido) e `.grad` (o realce
+champagne em itálico, que só existia na tagline antiga). Foram mantidas para
+permitir voltar atrás — se a decisão se firmar, aí sim podem sair.
+
 **`index.html`** — seções na ordem: hero, `#destaques`, `#fotos`, `#social`,
 `#sobre`, `#contato`. Blocos editáveis estão marcados com `EDITE AQUI`. Os eyebrows
 são numerados sequencialmente (`01 — Trabalhos` … `05 — Contato`) e precisam ser
 renumerados se uma seção for adicionada ou removida.
+
+O hero também usa `.section__eyebrow`, mas **sem número** (`Portfólio`), reaproveitando
+a tipografia das seções. Ele fica de fora dessa numeração.
 
 ### Os dois tipos de card em Destaques
 
@@ -145,10 +158,60 @@ com algo verossímil.
 Ainda há valores por confirmar com a Débora: os números da seção Social e do hero, e
 as legendas da galeria (a maioria está com o genérico "Cobertura de evento").
 
+Divergência aberta: o currículo dela escreve a série como **"Extraordinários"**
+(plural) e o site usa **"Extraordinário"** (singular). Um dos dois está errado —
+confirmar antes de mexer em qualquer um dos lados.
+
+O currículo (`assets/curriculo-debora-knupp.pdf`) é fonte confiável para dados que
+ainda faltam no site: formação (UNASP), idiomas, e o nome exato do prêmio ("Voto
+Popular de Melhor Curta · CineRondônia 2025"). Ele traz também o e-mail pessoal
+dela, já público por estar nesse PDF no ar; o telefone já aparecia no link do
+WhatsApp.
+
 ## Deploy
 
-O projeto **ainda não é um repositório Git**. Publicação prevista: GitHub + Netlify
-(`netlify.toml` já define `publish = "."` e nenhum comando de build). GitHub Pages
-serve igualmente bem — não há formulário para processar, já que o contato acontece
-por links de WhatsApp e Instagram. O [README.md](README.md) tem o passo a passo
-voltado ao usuário final.
+O site está **no ar e publicado automaticamente**:
+
+| | |
+|---|---|
+| Repositório | https://github.com/deboraknpp/portfolio-debora-knupp (público) |
+| Site | https://debora-knupp.netlify.app |
+| Publicação | Netlify ligada ao GitHub — todo push na `main` republica em ~30s |
+
+`netlify.toml` define `publish = "."` e nenhum comando de build. Como a raiz inteira
+é servida, **tudo que entra no Git fica público na web** — foi por isso que os
+originais saíram para `assets/originais/`. O [README.md](README.md) tem o passo a
+passo voltado ao usuário final.
+
+Para publicar uma alteração: `git add -A && git commit -m "..." && git push`. Não
+existe passo manual na Netlify. Depois vale confirmar no ar, sem abrir navegador:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' https://debora-knupp.netlify.app/CAMINHO
+```
+
+### A armadilha das duas contas do GitHub
+
+A máquina do titular tem **duas** contas de GitHub em jogo: a de trabalho dele
+(`MindConsultoria`) e a da Débora (`deboraknpp`), dona deste repositório. O Git
+Credential Manager escolhia a de trabalho sozinho, e o push falhava com
+`Permission to deboraknpp/... denied to MindConsultoria` — mensagem que engana,
+porque o GitHub responde `Repository not found` quando não há login nenhum.
+
+A solução já está aplicada: o remote carrega o usuário na URL.
+
+```
+https://deboraknpp@github.com/deboraknpp/portfolio-debora-knupp.git
+```
+
+**Não remova o `deboraknpp@`** — é ele que obriga o Git a pedir a conta certa. A
+autoria também está fixada só neste repositório, com o e-mail `noreply` do GitHub
+(`319645320+deboraknpp@users.noreply.github.com`), para não gravar o e-mail pessoal
+dela num histórico público e permanente.
+
+### Duas máquinas
+
+O titular trabalha no Windows; a Débora clona o mesmo repositório no computador
+dela. O clone traz só os 12 MB do site — `assets/originais/` chega praticamente
+vazia, com o `LEIA-ME.txt` explicando que os 349 MB vão por Google Drive. Isso é o
+esperado, não um clone quebrado.
