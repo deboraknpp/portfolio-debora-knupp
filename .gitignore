@@ -1,0 +1,46 @@
+# Sistema
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+*.code-workspace
+
+# Arquivos brutos de edição (pesados demais para o Git)
+*.prproj
+*.aep
+*.drp
+*.psd
+*.raw
+*.cr2
+*.arw
+*.mov
+brutos/
+
+# Material bruto (349 MB): mora fora do Git, no Google Drive / no PC da Débora.
+#   assets/originais/fotos/   fotos da câmera em resolução original (302 MB)
+#   assets/originais/videos/  exports do editor (48 MB)
+# O site publica só as versões processadas, em assets/fotos/ e assets/reels/.
+# O LEIA-ME fica no repositório de propósito: é a placa que diz onde está o resto.
+assets/originais/*
+!assets/originais/LEIA-ME.txt
+
+# Em assets/fotos/ entra só o que o site usa. Qualquer arquivo solto ali
+# (um original arrastado por engano) fica de fora do site sozinho.
+# Ao acrescentar uma capa nova de trabalho, some uma linha "!" a esta lista.
+assets/fotos/*
+!assets/fotos/foto-*.jpg
+!assets/fotos/hero.jpg
+!assets/fotos/hero-2.jpg
+!assets/fotos/hero-3.jpg
+!assets/fotos/perfil.jpg
+!assets/fotos/extraordinario.jpeg
+!assets/fotos/lacos.jpeg
+!assets/fotos/ppac.jpeg
+!assets/fotos/quadrienal.jpeg
+!assets/fotos/LEIA-ME.txt
+
+# Netlify
+.netlify/

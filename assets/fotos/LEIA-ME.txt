@@ -1,0 +1,15 @@
+Esta é a única pasta de fotos do site. Não crie subpastas aqui — o HTML e o
+CSS apontam para estes nomes exatos, e renomear faz a imagem sumir calada.
+
+  foto-1.jpg + foto-1-thumb.jpg ... foto-13.jpg   galeria (a grande abre no
+                                                  lightbox, a -thumb no mosaico)
+  hero.jpg, hero-2.jpg, hero-3.jpg                carrossel do topo (2:3, 934px)
+  perfil.jpg                                      seção Sobre
+  extraordinario / lacos / ppac / quadrienal      capas dos Destaques (.jpeg)
+
+Para acrescentar uma foto na galeria, gere as duas versões com o ffmpeg
+(as receitas estão no CLAUDE.md) e siga a numeração: foto-14.jpg + foto-14-thumb.jpg.
+
+As fotos em resolução original ficam em assets/originais/fotos/ — fora do Git,
+para você poder reprocessar depois. Vídeos não entram aqui: previews do site
+ficam em assets/reels/ e os exports do editor em assets/originais/videos/.

@@ -1,0 +1,61 @@
+MATERIAL BRUTO DO PORTFOLIO - Debora Knupp
+==========================================
+
+O que e isto
+------------
+As fotos em resolucao original da camera (pasta fotos/, 18 arquivos) e os
+exports do editor de video (pasta videos/, 10 arquivos). Sao 349 MB no total.
+
+Isto NAO faz parte do site. O site publica so as versoes comprimidas, que ja
+estao no repositorio em assets/fotos/ e assets/reels/. Estes originais servem
+para uma coisa: reprocessar mais tarde, se voce quiser outro recorte, outro
+tamanho ou um trecho diferente de video.
+
+Por isso eles ficam fora do Git: o site inteiro tem 12 MB e sobe rapido; estes
+349 MB deixariam o repositorio pesado e, pior, ficariam publicos e baixaveis
+no ar (a Netlify serve tudo que esta no repositorio).
+
+
+Onde guardar no seu PC
+----------------------
+Onde voce quiser. Nenhum arquivo do site aponta para ca - nao existe caminho
+fixo para respeitar. Pode ficar no Google Drive, num HD externo, ou numa pasta
+qualquer do seu computador.
+
+Uma recomendacao so: guarde esta pasta SEPARADA da pasta do site.
+Nao coloque a pasta do repositorio dentro do Google Drive - o Drive e o Git
+brigam pelo controle da subpasta .git e isso costuma corromper o historico.
+
+  Documentos/Portfolio/          <- o site (repositorio Git)
+  Google Drive/Portfolio-brutos/ <- esta pasta aqui
+
+
+Conferir se a transferencia veio inteira
+----------------------------------------
+Depois de baixar do Drive, abra o Git Bash dentro desta pasta e rode:
+
+  md5sum -c conferencia.md5
+
+Cada uma das 28 linhas deve terminar com ": OK". Se alguma disser
+"FAILED", aquele arquivo veio corrompido e precisa ser baixado de novo.
+
+Conferencia rapida sem comando: sao 28 arquivos e 349 MB. O arquivo
+conferencia.txt lista o tamanho exato de cada um.
+Como usar os originais
+----------------------
+As receitas de ffmpeg estao no CLAUDE.md do repositorio do site. Resumo:
+
+  # foto da galeria: versao grande do lightbox + miniatura do mosaico
+  ffmpeg -y -i ORIGINAL.jpg -vf "scale='min(1600,iw)':'min(1600,ih)':force_original_aspect_ratio=decrease" -q:v 3 foto-N.jpg
+  ffmpeg -y -i ORIGINAL.jpg -vf "scale='min(800,iw)':'min(800,ih)':force_original_aspect_ratio=decrease"  -q:v 4 foto-N-thumb.jpg
+
+  # preview de reel: 6s, vertical, SEM audio (o -an e obrigatorio), ~1 MB
+  ffmpeg -y -i ORIGINAL.mp4 -t 6 -an -vf "scale=-2:1280,fps=30" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart reel-N.mp4
+
+O resultado vai para assets/fotos/ e assets/reels/ do repositorio do site,
+seguindo a numeracao que ja existe la. So o resultado entra no Git - o
+original continua aqui.
+
+Atencao: ao acrescentar um arquivo novo em assets/fotos/, ele precisa ganhar
+uma linha no .gitignore do site (a pasta funciona por lista de permissao) -
+menos os que comecam com "foto-", esses ja passam sozinhos.

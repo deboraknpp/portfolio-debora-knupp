@@ -1,0 +1,12 @@
+Coloque aqui os previews curtos dos Reels, com estes nomes exatos:
+
+  reel-1.mp4 ... reel-10.mp4
+
+Receita de cada arquivo:
+  - 4 a 6 segundos do trecho mais bonito
+  - 720 x 1280 (vertical), 30 fps
+  - H.264 (nao use H.265/HEVC)
+  - SEM audio
+  - alvo de ~1 MB por arquivo
+
+Enquanto o arquivo nao existir, o card mostra a capa e o site funciona normalmente.

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ============ EDITE AQUI: como o site aparece no Google e ao compartilhar ============ -->
+  <title>Débora Knupp — Audiovisual</title>
+  <meta name="description" content="Portfólio audiovisual de Débora Knupp: produção de conteúdo, fotografia, direção e social media. Vídeos, fotos e projetos em destaque." />
+  <meta name="author" content="Débora Knupp" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Débora Knupp — Audiovisual" />
+  <meta property="og:description" content="Produção de conteúdo, fotografia e social media." />
+  <meta property="og:image" content="assets/og-image.svg" />
+  <meta name="theme-color" content="#12100e" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+  <div class="bg-decor" aria-hidden="true">
+    <div class="bg-grain"></div>
+    <div class="bg-glow bg-glow--1"></div>
+    <div class="bg-glow bg-glow--2"></div>
+  </div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <nav class="nav" id="nav" aria-label="Navegação principal">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#destaques">Destaques</a></li>
+          <li><a class="nav__link" href="#fotos">Fotos</a></li>
+          <li><a class="nav__link" href="#social">Social</a></li>
+          <li><a class="nav__link" href="#sobre">Sobre</a></li>
+          <li><a class="nav__link nav__link--cta" href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Alternar tema claro/escuro" title="Alternar tema">
+          <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+          </svg>
+          <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
+          </svg>
+        </button>
+
+        <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+          <span class="burger"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="hero">
+      <!-- ============ OPCIONAL: vídeo de fundo ============
+           Coloque um arquivo curto (10–15s, sem áudio) em assets/reel-bg.mp4
+           e descomente as 3 linhas abaixo:
+      <video class="hero__video" autoplay muted loop playsinline poster="assets/hero-poster.jpg">
+        <source src="assets/reel-bg.mp4" type="video/mp4" />
+      </video>
+      -->
+      <div class="hero__bg" aria-hidden="true"></div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+
+      <div class="container hero__inner">
+        <div class="hero__col">
+          <!-- ============ EDITE AQUI: título principal ============ -->
+          <h1 class="hero__title reveal">Débora Knupp</h1>
+
+          <p class="hero__tagline reveal">
+            Do campo missionário <span class="grad">para a tela</span>
+          </p>
+
+          <p class="hero__text reveal">
+            Produção audiovisual, fotografia e estratégia de conteúdo — do roteiro
+            ao corte final — para quem tem uma mensagem que precisa alcançar pessoas.
+          </p>
+        </div>
+
+        <!-- ============ EDITE AQUI: fotos do carrossel ============
+             Trocam sozinhas a cada 4,5s. Para acrescentar outra, copie uma linha
+             <img> e coloque mais um <i> nos tracinhos abaixo. -->
+        <figure class="hero__figure reveal" id="hero-carousel">
+          <img class="is-active" src="assets/fotos/hero.jpg" width="934" height="1400" fetchpriority="high"
+               alt="Claquete da série Extraordinário erguida em um set de gravação" />
+          <img src="assets/fotos/hero-2.jpg" width="934" height="1400" loading="lazy"
+               alt="Débora Knupp fotografando com teleobjetiva durante uma gravação" />
+          <img src="assets/fotos/hero-3.jpg" width="934" height="1400" loading="lazy"
+               alt="Débora Knupp operando uma câmera em gimbal em locação externa" />
+          <span class="hero__dots" aria-hidden="true">
+            <i class="is-active"></i><i></i><i></i>
+          </span>
+        </figure>
+
+        <!-- ============ EDITE AQUI: seus números ============ -->
+        <ul class="hero__stats reveal">
+          <li><strong data-count="120" data-suffix="+">0</strong><span>projetos entregues</span></li>
+          <li><strong data-count="30" data-suffix="M+">0</strong><span>visualizações geradas</span></li>
+          <li><strong data-count="3" data-suffix=" anos">0</strong><span>de experiência</span></li>
+        </ul>
+      </div>
+
+      <a class="scroll-hint" href="#destaques" aria-label="Rolar para baixo"><span></span></a>
+    </section>
+
+    <!-- ===================== WIDGET 1: DESTAQUES ===================== -->
+    <section class="section" id="destaques">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">01 — Trabalhos</p>
+          <h2 class="section__title">Destaques</h2>
+        </header>
+
+        <div class="filters reveal" role="group" aria-label="Filtrar trabalhos">
+          <button class="filter is-active" data-filter="all" type="button">Todos</button>
+          <button class="filter" data-filter="series" type="button">Séries</button>
+          <button class="filter" data-filter="filme" type="button">Filme</button>
+          <button class="filter" data-filter="quadrienal" type="button">Quadrienal</button>
+        </div>
+
+        <!-- ============ EDITE AQUI: um <article> por trabalho ============
+             - data-category: series | filme | quadrienal
+             - data-video: ID do vídeo no YouTube (ex.: youtu.be/ABC123 -> ABC123)
+               ou use data-vimeo="123456789" para Vimeo
+             - Para usar um print seu: coloque style="background-image:url('assets/capa-1.jpg')"
+               na div .work__thumb -->
+        <div class="works" id="works-grid">
+
+          <!-- Trabalho que leva a um site externo: usa <a> no lugar de <button>.
+               A capa é a classe work__thumb--NOME, definida no CSS. -->
+          <article class="work work--wide reveal" data-category="series">
+            <a class="work__btn" href="https://feliz7play.com/pt/c/extraordinario"
+               target="_blank" rel="noopener"
+               aria-label="Extraordinário — assistir à série no Feliz7Play, abre em outro site">
+              <span class="work__thumb work__thumb--capa work__thumb--extraordinario" aria-hidden="true"></span>
+              <span class="work__play" aria-hidden="true"></span>
+              <span class="work__info">
+                <span class="work__tag">Séries</span>
+                <span class="work__title">Extraordinário</span>
+                <span class="work__meta">Feliz7Play · Assistir <span class="work__out" aria-hidden="true">↗</span></span>
+              </span>
+            </a>
+          </article>
+
+          <article class="work work--wide reveal" data-category="series">
+            <a class="work__btn" href="https://feliz7play.com/pt/c/lacos"
+               target="_blank" rel="noopener"
+               aria-label="Laços — assistir à série no Feliz7Play, abre em outro site">
+              <span class="work__thumb work__thumb--capa work__thumb--lacos" aria-hidden="true"></span>
+              <span class="work__play" aria-hidden="true"></span>
+              <span class="work__info">
+                <span class="work__tag">Séries</span>
+                <span class="work__title">Laços</span>
+                <span class="work__meta">Feliz7Play · Assistir <span class="work__out" aria-hidden="true">↗</span></span>
+              </span>
+            </a>
+          </article>
+
+          <!-- Vídeo do YouTube: abre no player dentro do site, sem sair da página. -->
+          <article class="work work--wide reveal" data-category="filme">
+            <button class="work__btn" type="button" data-video="AI4DI6R8nWs"
+                    data-title="Prontos Para a Colheita — O Filme">
+              <span class="work__thumb work__thumb--capa work__thumb--ppac" aria-hidden="true"></span>
+              <span class="work__play" aria-hidden="true"></span>
+              <span class="work__info">
+                <span class="work__tag">Filme</span>
+                <span class="work__title">Prontos Para a Colheita</span>
+                <span class="work__meta">O filme completo · Assistir no player</span>
+              </span>
+            </button>
+
+            <!-- Prêmio: fica fora do <button> porque um link não pode morar dentro dele -->
+            <p class="work__award">
+              Premiado pelo Cine RO na categoria: melhor filme a voto popular.
+              <a href="https://noticias.adventistas.org/pt/prontos-para-a-colheita-vence-votacao-do-juri-popular-no-iii-festival-de-cinema-de-rondonia/"
+                 target="_blank" rel="noopener">Ver a matéria <span aria-hidden="true">↗</span></a>
+            </p>
+          </article>
+
+          <!-- EDITE AQUI o título se o nome oficial do projeto for outro. -->
+          <article class="work work--wide reveal" data-category="quadrienal">
+            <button class="work__btn" type="button" data-video="qhio4zFgQ5w"
+                    data-title="Relatório V Quadrienal ASuR — Prontos Para a Colheita">
+              <span class="work__thumb work__thumb--capa work__thumb--quadrienal" aria-hidden="true"></span>
+              <span class="work__play" aria-hidden="true"></span>
+              <span class="work__info">
+                <span class="work__tag">Quadrienal</span>
+                <span class="work__title">Relatório V Quadrienal</span>
+                <span class="work__meta">ASuR · Assistir no player</span>
+              </span>
+            </button>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WIDGET 3: FOTOS ===================== -->
+    <section class="section" id="fotos">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">02 — Fotografia</p>
+          <h2 class="section__title">Galeria</h2>
+        </header>
+
+        <!-- ============ EDITE AQUI: as legendas (data-caption e alt) ============
+             Hoje todas dizem "Cobertura de evento" — troque pela descrição real
+             de cada foto: ela aparece no lightbox e é o que leitores de tela leem.
+
+             Para acrescentar fotos: gere as duas versões em assets/fotos/
+             (foto-N.jpg grande e foto-N-thumb.jpg pequena) e copie um bloco abaixo.
+             A classe .shot--tall faz a foto ocupar duas linhas do mosaico. -->
+        <div class="gallery" id="gallery">
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-1.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-1-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot reveal" type="button"
+                  data-full="assets/fotos/foto-2.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-2-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot reveal" type="button"
+                  data-full="assets/fotos/foto-3.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-3-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-4.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-4-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot reveal" type="button"
+                  data-full="assets/fotos/foto-5.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-5-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-6.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-6-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot reveal" type="button"
+                  data-full="assets/fotos/foto-7.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-7-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-8.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-8-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-9.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-9-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-10.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-10-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot shot--tall reveal" type="button"
+                  data-full="assets/fotos/foto-11.jpg" data-caption="Cobertura de evento">
+            <img src="assets/fotos/foto-11-thumb.jpg" alt="Cobertura de evento" loading="lazy" />
+          </button>
+          <button class="shot reveal" type="button"
+                  data-full="assets/fotos/foto-12.jpg" data-caption="Canoa ao pôr do sol no rio">
+            <img src="assets/fotos/foto-12-thumb.jpg" alt="Canoa ao pôr do sol no rio" loading="lazy" />
+          </button>
+          <button class="shot shot--top reveal" type="button"
+                  data-full="assets/fotos/foto-13.jpg" data-caption="Barco na margem do rio">
+            <img src="assets/fotos/foto-13-thumb.jpg" alt="Barco na margem do rio" loading="lazy" />
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WIDGET 4: SOCIAL MEDIA ===================== -->
+    <section class="section section--alt" id="social">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">03 — Social media</p>
+          <h2 class="section__title">Planejamento e execução</h2>
+        </header>
+
+        <!-- ============ EDITE AQUI: seus números e @ ============ -->
+        <div class="social-stats reveal">
+          <div class="social-stat">
+            <strong data-count="70" data-suffix="k">0</strong>
+            <span>seguidores somados</span>
+          </div>
+          <div class="social-stat">
+            <strong data-count="300" data-suffix="+">0</strong>
+            <span>vídeos publicados</span>
+          </div>
+          <div class="social-stat">
+            <strong data-count="60" data-suffix="%">0</strong>
+            <span>de alcance em não seguidores</span>
+          </div>
+        </div>
+
+        <!-- Grade estilo feed — clique abre o post/vídeo -->
+        <div class="feed-wrap">
+          <button class="feed-nav feed-nav--prev" type="button" aria-label="Ver vídeos anteriores" aria-controls="feed">‹</button>
+
+          <div class="feed" id="feed" tabindex="0" role="region" aria-label="Vídeos publicados nas redes">
+          <!-- EDITE AQUI: href = link do post no Instagram.
+               O <video> é opcional: enquanto assets/reels/reel-1.mp4 não existir,
+               o card mostra a capa normalmente. -->
+          <a class="post reveal" href="https://www.instagram.com/reel/DZi6mZzJgnY/" target="_blank" rel="noopener" aria-label="Ver o Reel 1 no Instagram">
+            <span class="post__media post__media--1" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-1.mp4" type="video/mp4" />
+            </video>
+          </a>
+          <a class="post reveal" href="https://www.instagram.com/reel/C4_kIrRLdt3/" target="_blank" rel="noopener" aria-label="Ver o Reel 2 no Instagram">
+            <span class="post__media post__media--2" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-2.mp4" type="video/mp4" />
+            </video>
+          </a>
+          <a class="post reveal" href="https://www.instagram.com/reel/C4teNoprYbF/" target="_blank" rel="noopener" aria-label="Ver o Reel 3 no Instagram">
+            <span class="post__media post__media--3" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-3.mp4" type="video/mp4" />
+            </video>
+          </a>
+          <a class="post reveal" href="https://www.instagram.com/reel/DBl67yQOxjU/" target="_blank" rel="noopener" aria-label="Ver o Reel 4 no Instagram">
+            <span class="post__media post__media--4" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-4.mp4" type="video/mp4" />
+            </video>
+          </a>
+
+          <!-- ============ EDITE AQUI: nos cards abaixo falta o número de views
+               e a legenda real de cada post. O padrão é o mesmo dos de cima:
+               <strong>1,2M views</strong> seguido de <em>legenda</em>. ============ -->
+          <a class="post reveal" href="https://www.instagram.com/reel/DBoqxJCvCF7/" target="_blank" rel="noopener" aria-label="Ver o Reel 5 no Instagram">
+            <span class="post__media post__media--5" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-5.mp4" type="video/mp4" />
+            </video>
+          </a>
+
+          <a class="post reveal" href="https://www.instagram.com/reel/DA_7vvZP_F1/" target="_blank" rel="noopener" aria-label="Ver o Reel 6 no Instagram">
+            <span class="post__media post__media--6" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-6.mp4" type="video/mp4" />
+            </video>
+          </a>
+
+          <a class="post reveal" href="https://www.instagram.com/reel/C_LYWEGOWKe/" target="_blank" rel="noopener" aria-label="Ver o Reel 7 no Instagram">
+            <span class="post__media post__media--7" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-7.mp4" type="video/mp4" />
+            </video>
+          </a>
+
+          <a class="post reveal" href="https://www.instagram.com/reel/C90n6sfPlin/" target="_blank" rel="noopener" aria-label="Ver o Reel 8 no Instagram">
+            <span class="post__media post__media--8" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-8.mp4" type="video/mp4" />
+            </video>
+          </a>
+
+          <a class="post reveal" href="https://www.instagram.com/reel/DbwcdpApWr0/" target="_blank" rel="noopener" aria-label="Ver o Reel 9 no Instagram">
+            <span class="post__media post__media--9" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-9.mp4" type="video/mp4" />
+            </video>
+          </a>
+
+          <a class="post reveal" href="https://www.instagram.com/reel/DNl8vSOtNPd/" target="_blank" rel="noopener" aria-label="Ver o Reel 10 no Instagram">
+            <span class="post__media post__media--10" aria-hidden="true"></span>
+            <video class="post__video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1">
+              <source src="assets/reels/reel-10.mp4" type="video/mp4" />
+            </video>
+          </a>
+          </div>
+
+          <button class="feed-nav feed-nav--next" type="button" aria-label="Ver próximos vídeos" aria-controls="feed">›</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SOBRE ===================== -->
+    <section class="section" id="sobre">
+      <div class="container">
+        <div class="about">
+          <div class="about__media reveal">
+            <!-- ============ EDITE AQUI: sua foto (assets/fotos/perfil.jpg) ============ -->
+            <img src="assets/fotos/perfil.jpg" width="800" height="1200" loading="lazy"
+                 alt="Débora Knupp sentada em um banco, em um estúdio de fotografia" />
+          </div>
+
+          <div class="about__text reveal">
+            <p class="section__eyebrow">04 — Sobre</p>
+            <h2 class="section__title">Débora Knupp</h2>
+            <!-- ============ EDITE AQUI: sua história ============ -->
+            <p>
+              Descobri no campo missionário uma paixão por comunicar Jesus.
+            </p>
+            <p>
+              Atuo com produção audiovisual, gerenciamento de redes sociais, captação
+              de imagem e fotografia, além de desenvolver estratégias, roteiros e
+              campanhas para conteúdos que geram conexão e transformam vidas.
+            </p>
+
+            <!-- ============ EDITE AQUI: áreas de atuação ============ -->
+            <p class="skills__label">Áreas de atuação</p>
+            <ul class="skills">
+              <li>Produção audiovisual</li>
+              <li>Fotografia</li>
+              <li>Roteiros</li>
+              <li>Captação de vídeo</li>
+              <li>Social media</li>
+              <li>Direção de arte</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Depoimento -->
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO ===================== -->
+    <section class="section section--contact" id="contato">
+      <div class="container">
+        <div class="contact reveal">
+          <div class="contact__intro">
+            <p class="section__eyebrow">05 — Contato</p>
+            <h2 class="section__title">Bora criar algo juntos?</h2>
+
+            <!-- ============ EDITE AQUI: seus contatos ============ -->
+            <ul class="contact__links">
+              <li>
+                <a href="https://wa.me/5543999115840?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20seu%20trabalho" target="_blank" rel="noopener" class="contact__link">
+                  <span class="contact__icon">✆</span>
+                  <span><strong>WhatsApp</strong><em>(43) 99911-5840</em></span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/deboraknpp/" target="_blank" rel="noopener" class="contact__link">
+                  <span class="contact__icon">◎</span>
+                  <span><strong>Instagram</strong><em>@deboraknpp</em></span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year">2026</span> Débora Knupp — Audiovisual. Todos os direitos reservados.</p>
+      <a href="#hero" class="link link--muted">Voltar ao topo ↑</a>
+    </div>
+  </footer>
+
+  <!-- ===================== LIGHTBOX (fotos) ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visualizador de fotos" hidden>
+    <button class="lightbox__close" type="button" aria-label="Fechar">✕</button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" aria-label="Foto anterior">‹</button>
+    <figure class="lightbox__figure">
+      <div class="lightbox__stage" id="lightbox-stage"></div>
+      <figcaption class="lightbox__caption" id="lightbox-caption"></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--next" type="button" aria-label="Próxima foto">›</button>
+  </div>
+
+  <!-- ===================== MODAL DE VÍDEO ===================== -->
+  <div class="vmodal" id="vmodal" role="dialog" aria-modal="true" aria-label="Player de vídeo" hidden>
+    <button class="vmodal__close" type="button" aria-label="Fechar">✕</button>
+    <div class="vmodal__inner">
+      <div class="vmodal__frame" id="vmodal-frame"></div>
+      <p class="vmodal__title" id="vmodal-title"></p>
+      <!-- Saída caso o vídeo não possa ser incorporado (ex.: erro 153 do YouTube) -->
+      <a class="vmodal__out" id="vmodal-link" href="#" target="_blank" rel="noopener">
+        Se o vídeo não carregar, abra direto na plataforma ↗
+      </a>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
