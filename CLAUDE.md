@@ -218,17 +218,24 @@ e o bloco de JS que abria e fechava — foi pedido da titular em agosto/2026.
 
 ### Faixas que rolam para o lado
 
-São duas, e o mesmo bloco 11 do JS cuida das duas: qualquer elemento com
-`data-strip` no HTML, contendo um trilho (`.feed` ou `.gallery`) e os dois botões
-`.feed-nav`. As setas rolam dois cards por clique e se desabilitam sozinhas nas
-pontas — e também quando não há o que rolar, que é como a galeria no PC esconde
-as setas sem precisar de regra própria.
+Hoje só a faixa de Reels é uma, mas o bloco 10 do JS é genérico: percorre qualquer
+elemento com `data-strip` no HTML que contenha um trilho (`.feed` ou `.gallery`) e
+os dois botões `.feed-nav`. As setas rolam dois cards por clique e se desabilitam
+sozinhas nas pontas — e também quando não há o que rolar.
 
-**No celular a galeria vira o mesmo mosaico, deitado**: abaixo de 760px são duas
-linhas correndo para o lado (`grid-auto-flow: column dense`), com células de
-210×150 — a mesma proporção das do PC — e as fotos altas ocupando as duas linhas.
-Espremer 13 fotos em uma ou duas colunas verticais dava uma fila de vários metros
-de rolagem.
+**A galeria já foi uma faixa dessas e deixou de ser**, a pedido da titular
+(agosto/2026). No celular ela é o mesmo mosaico do PC em duas colunas, descendo:
+células de ~165×118, a proporção deitada das do PC, com as fotos altas ocupando
+duas linhas. Rolar de lado escondia foto, e ela quis todas na tela.
+
+### O Sobre tem três filhos, não dois
+
+`.about` contém `.about__head` (o `04 — Sobre` e o nome), `.about__media` e
+`.about__text`. No PC o cabeçalho e o texto ficam na coluna da direita, um sobre o
+outro, e a foto atravessa as duas linhas à esquerda — o desenho de sempre. No
+celular a ordem do HTML manda: título em cima, foto de lado à esquerda (`float`,
+não coluna de grid) e o texto correndo à direita dela. Daí o `row-gap: 0` na
+grade: o espaço entre o título e o texto vem do `margin-bottom` do `h2`.
 
 ### A armadilha do `margin-inline: auto` em item de grid
 
