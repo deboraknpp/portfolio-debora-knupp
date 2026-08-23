@@ -191,15 +191,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 1rem;
 }
-.nav { grid-column: 2; }
-.header__actions {
-  grid-column: 3;
-  justify-self: end;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
+.nav { grid-column: 2; min-width: 0; }
 .nav__list { display: flex; align-items: center; gap: 0.2rem; }
 .nav__link {
   position: relative;
@@ -226,33 +218,6 @@ h1, h2, h3 {
 .nav__link--cta { border: 1px solid var(--line-strong); margin-left: 0.6rem; color: var(--text); }
 .nav__link--cta::after { display: none; }
 .nav__link--cta:hover { background: var(--text); color: var(--bg); border-color: var(--text); }
-
-.icon-btn {
-  width: 38px; height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: transparent;
-  color: var(--muted);
-  transition: color 0.3s, border-color 0.3s;
-}
-.icon-btn:hover { color: var(--text); border-color: var(--line-strong); }
-
-.nav-toggle { display: none; }
-.burger, .burger::before, .burger::after {
-  display: block;
-  width: 17px; height: 1px;
-  background: currentColor;
-  transition: transform 0.35s var(--ease), opacity 0.2s;
-}
-.burger { position: relative; }
-.burger::before, .burger::after { content: ""; position: absolute; left: 0; }
-.burger::before { top: -5px; }
-.burger::after  { top: 5px; }
-.nav-toggle[aria-expanded="true"] .burger { background: transparent; }
-.nav-toggle[aria-expanded="true"] .burger::before { transform: translateY(5px) rotate(45deg); }
-.nav-toggle[aria-expanded="true"] .burger::after  { transform: translateY(-5px) rotate(-45deg); }
 
 /* ============ 4. HERO ============ */
 .hero {
@@ -931,7 +896,10 @@ h1, h2, h3 {
      Em uma coluna só, a foto de 300px encostada à esquerda deixava metade
      da tela vazia ao lado. */
   .hero__inner { grid-template-columns: 1fr; }
-  .hero__figure { max-width: 300px; margin-inline: auto; }
+  /* width explícito é obrigatório aqui: margin-inline:auto sozinho encolhe o
+     item de grid até o conteúdo, e o conteúdo desta figure é todo
+     position:absolute — daria largura zero e a foto sumiria. */
+  .hero__figure { width: 100%; max-width: 300px; margin-inline: auto; }
   .hero__col { text-align: center; }
   .hero__stats { justify-content: center; text-align: center; }
   .hero__stats li { align-items: center; }
@@ -947,7 +915,7 @@ h1, h2, h3 {
   .works { grid-template-columns: repeat(4, 1fr); }
   .work, .work--wide { grid-column: span 2; }
   .about { grid-template-columns: 1fr; }
-  .about__media { max-width: 320px; margin-inline: auto; }
+  .about__media { width: 100%; max-width: 320px; margin-inline: auto; }
   .contact { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: repeat(3, 1fr); }
   .social-stat { border-left: 0; border-top: 1px solid var(--line); text-align: center; }
@@ -955,28 +923,32 @@ h1, h2, h3 {
 }
 
 @media (max-width: 760px) {
-  .nav-toggle { display: grid; }
-
   /* backdrop-filter recalcula a cada quadro de rolagem: caro no celular.
      Fundo quase opaco dá o mesmo resultado de graça. */
   .header.is-scrolled { background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: none; }
 
-  .nav {
-    position: fixed;
-    inset: 0 0 0 auto;
-    width: min(80vw, 340px);
-    padding: 110px 2rem 2rem;
-    background: var(--bg-2);
-    border-left: 1px solid var(--line);
-    transform: translateX(105%);
-    transition: transform 0.5s var(--ease);
-    z-index: 90;
+  /* Menu aberto, sem gaveta: são cinco palavras curtas e cabem numa tira.
+     O corpo acompanha a largura da tela; em aparelho muito estreito a tira
+     rola de lado em vez de quebrar. */
+  .header { padding-block: 1rem; }
+  .header__inner { grid-template-columns: 1fr; }
+  .nav { grid-column: 1; min-width: 0; }
+  .nav__list {
+    justify-content: space-between;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .nav.is-open { transform: none; box-shadow: var(--shadow); }
-  .nav__list { flex-direction: column; align-items: stretch; gap: 0; }
-  .nav__link { padding: 1.05rem 0; border-bottom: 1px solid var(--line); font-size: 0.9rem; }
-  .nav__link::after { left: 0; right: 0; bottom: 0; }
-  .nav__link--cta { margin: 1.5rem 0 0; padding: 1rem; text-align: center; border: 1px solid var(--line-strong); }
+  .nav__list::-webkit-scrollbar { display: none; }
+  .nav__link {
+    padding: 0.45rem 0.3rem;
+    font-size: clamp(0.54rem, 2.7vw, 0.74rem);
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+  }
+  .nav__link::after { left: 0.3rem; right: 0.3rem; }
+  .nav__link--cta { margin-left: 0; border: 0; color: var(--accent); }
 
   .works { grid-template-columns: 1fr; }
   .work, .work--wide { grid-column: span 1; }
@@ -988,8 +960,8 @@ h1, h2, h3 {
      ocupando as duas linhas, como lá. */
   .gallery {
     grid-template-columns: none;
-    grid-template-rows: repeat(2, 170px);
-    grid-auto-columns: 170px;
+    grid-template-rows: repeat(2, 150px);
+    grid-auto-columns: 210px;      /* 210x150 = a mesma proporção do PC */
     grid-auto-flow: column dense;
     grid-auto-rows: auto;
     gap: 1rem;
@@ -1013,6 +985,13 @@ h1, h2, h3 {
      lista alta e o hero perdia a linha de base. */
   .hero__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem 0.7rem; }
   .hero__stats span { font-size: 0.58rem; letter-spacing: 0.1em; text-indent: 0.1em; }
+
+  /* Os três do Social também lado a lado, separados por fio vertical como no PC */
+  .social-stats { grid-template-columns: repeat(3, 1fr); }
+  .social-stat { padding: 1.7rem 0.4rem; border-top: 0; border-left: 1px solid var(--line); }
+  .social-stat:first-child { border-left: 0; }
+  .social-stat strong { font-size: clamp(1.5rem, 7vw, 2.2rem); }
+  .social-stat span { font-size: 0.55rem; letter-spacing: 0.08em; }
   .scroll-hint { display: none; }
 
   .filters { gap: 1.4rem; }
@@ -1029,7 +1008,7 @@ h1, h2, h3 {
 
 @media (max-width: 420px) {
   /* mesma faixa deitada, com células um pouco menores */
-  .gallery { grid-template-rows: repeat(2, 140px); grid-auto-columns: 140px; gap: 0.8rem; }
+  .gallery { grid-template-rows: repeat(2, 132px); grid-auto-columns: 185px; gap: 0.8rem; }
   .btn { width: 100%; justify-content: center; }
 }
 

@@ -96,10 +96,10 @@ trabalho precisa ganhar sua linha `!assets/fotos/NOME.jpeg`** ou some no deploy.
 
 ## Arquitetura
 
-**`js/main.js`** — IIFE única, dividida em 13 blocos numerados e independentes. Cada
+**`js/main.js`** — IIFE única, dividida em 12 blocos numerados e independentes. Cada
 bloco começa consultando seus elementos e sai se não encontrar (`if (!el) return`),
 então **remover uma seção do HTML não quebra o resto do site**. Ganchos por `id`:
-`#header`, `#nav`, `#nav-toggle`, `#hero-carousel`, `#works-grid`,
+`#header`, `#nav`, `#hero-carousel`, `#works-grid`,
 `#gallery`, `#lightbox*`, `#vmodal*`, `#feed`, `#year` — mais o atributo `data-strip`,
 que marca as faixas que rolam para o lado (ver "Faixas que rolam para o lado").
 
@@ -207,6 +207,15 @@ Duas coisas que só valem no toque, em `@media (hover: none)`: o botão de play 
 cards fica sempre visível (sem mouse ele nunca apareceria) e os zooms de hover são
 desligados.
 
+### O menu fica aberto, também no celular
+
+Não existe mais botão de três linhas: as cinco palavras do menu cabem numa tira
+dentro do header em qualquer largura, e abaixo de 760px elas encolhem
+(`clamp(0.54rem, 2.7vw, 0.74rem)`) e se espalham com `space-between`. Em
+aparelho muito estreito a tira rola de lado em vez de quebrar em duas linhas.
+Saíram junto o `#nav-toggle`, a gaveta lateral, as regras `.burger`/`.icon-btn`
+e o bloco de JS que abria e fechava — foi pedido da titular em agosto/2026.
+
 ### Faixas que rolam para o lado
 
 São duas, e o mesmo bloco 11 do JS cuida das duas: qualquer elemento com
@@ -216,9 +225,19 @@ pontas — e também quando não há o que rolar, que é como a galeria no PC es
 as setas sem precisar de regra própria.
 
 **No celular a galeria vira o mesmo mosaico, deitado**: abaixo de 760px são duas
-linhas correndo para o lado (`grid-auto-flow: column dense`), com as fotos altas
-ocupando as duas, como no PC. Espremer 13 fotos em uma ou duas colunas verticais
-dava uma fila de vários metros de rolagem.
+linhas correndo para o lado (`grid-auto-flow: column dense`), com células de
+210×150 — a mesma proporção das do PC — e as fotos altas ocupando as duas linhas.
+Espremer 13 fotos em uma ou duas colunas verticais dava uma fila de vários metros
+de rolagem.
+
+### A armadilha do `margin-inline: auto` em item de grid
+
+Centralizar `.hero__figure` com `margin-inline: auto` **fez a foto sumir**. Margem
+automática encolhe o item de grid até o conteúdo, e o conteúdo dessa figure é todo
+`position: absolute` (as fotos empilhadas e os tracinhos): largura zero, e o
+`aspect-ratio` então dá altura zero. Por isso ela leva `width: 100%` junto do
+`max-width`. Vale para qualquer bloco centrado assim — `.about__media` tem a mesma
+linha por precaução.
 
 ## Deploy
 

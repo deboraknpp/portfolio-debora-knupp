@@ -19,36 +19,7 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   /* ---------------------------------------------------------------
-     2. MENU MOBILE
-     --------------------------------------------------------------- */
-  const navToggle = $("#nav-toggle");
-  const nav = $("#nav");
-
-  const closeNav = () => {
-    if (!nav) return;
-    nav.classList.remove("is-open");
-    navToggle.setAttribute("aria-expanded", "false");
-    navToggle.setAttribute("aria-label", "Abrir menu");
-    document.body.style.overflow = "";
-  };
-
-  if (navToggle && nav) {
-    navToggle.addEventListener("click", () => {
-      const open = nav.classList.toggle("is-open");
-      navToggle.setAttribute("aria-expanded", String(open));
-      navToggle.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
-      document.body.style.overflow = open ? "hidden" : "";
-    });
-
-    $$(".nav__link", nav).forEach((link) => link.addEventListener("click", closeNav));
-
-    document.addEventListener("click", (e) => {
-      if (nav.classList.contains("is-open") && !nav.contains(e.target) && !navToggle.contains(e.target)) closeNav();
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     3. REVEAL — elementos aparecem conforme o scroll
+     2. REVEAL — elementos aparecem conforme o scroll
      --------------------------------------------------------------- */
   const revealItems = $$(".reveal");
 
@@ -69,7 +40,7 @@
   }
 
   /* ---------------------------------------------------------------
-     4. LINK ATIVO NO MENU conforme a seção visível
+     3. LINK ATIVO NO MENU conforme a seção visível
      --------------------------------------------------------------- */
   const sections = $$("main section[id]");
   const navLinks = $$(".nav__link");
@@ -90,7 +61,7 @@
   }
 
   /* ---------------------------------------------------------------
-     5. CONTADORES ANIMADOS (números do hero e do social)
+     4. CONTADORES ANIMADOS (números do hero e do social)
      --------------------------------------------------------------- */
   const counters = $$("[data-count]");
 
@@ -128,7 +99,7 @@
   }
 
   /* ---------------------------------------------------------------
-     6. FILTRO DOS DESTAQUES
+     5. FILTRO DOS DESTAQUES
      --------------------------------------------------------------- */
   const filters = $$(".filter");
   const works = $$("#works-grid .work");
@@ -147,7 +118,7 @@
   });
 
   /* ---------------------------------------------------------------
-     7. MODAL DE VÍDEO (YouTube / Vimeo)
+     6. MODAL DE VÍDEO (YouTube / Vimeo)
      O vídeo só é carregado ao clicar — a página abre rápido.
      --------------------------------------------------------------- */
   const vmodal = $("#vmodal");
@@ -201,7 +172,7 @@
   }
 
   /* ---------------------------------------------------------------
-     8. LIGHTBOX DA GALERIA DE FOTOS
+     7. LIGHTBOX DA GALERIA DE FOTOS
      Funciona tanto com <img> quanto com os placeholders coloridos.
      --------------------------------------------------------------- */
   const lightbox = $("#lightbox");
@@ -268,7 +239,7 @@
   }
 
   /* ---------------------------------------------------------------
-     9. PREVIEWS EM VÍDEO NOS CARDS DE SOCIAL
+     8. PREVIEWS EM VÍDEO NOS CARDS DE SOCIAL
      Tocam em loop e sem áudio, só enquanto o card está na tela — fora
      dela o vídeo pausa, para não gastar bateria nem dados de graça.
      Se o arquivo não existir, o card segue mostrando a capa.
@@ -303,7 +274,7 @@
   }
 
   /* ---------------------------------------------------------------
-     10. CARROSSEL DO HERO
+     9. CARROSSEL DO HERO
      As fotos trocam sozinhas, com fade. Pausa quando o hero sai da tela
      e nem começa para quem desativou animações no sistema.
      --------------------------------------------------------------- */
@@ -355,7 +326,7 @@
   }
 
   /* ---------------------------------------------------------------
-     11. FAIXAS QUE ROLAM PARA O LADO
+     10. FAIXAS QUE ROLAM PARA O LADO
      Vale para a faixa de Reels e, no celular, para o mosaico da galeria —
      qualquer bloco marcado com data-strip no HTML. As setas rolam dois cards
      por clique e somem nas pontas; somem também quando não há o que rolar,
@@ -389,10 +360,10 @@
   });
 
   /* ---------------------------------------------------------------
-     12. TECLADO — Esc fecha, setas navegam
+     11. TECLADO — Esc fecha, setas navegam
      --------------------------------------------------------------- */
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") { closeVideo(); closeLightbox(); closeNav(); }
+    if (e.key === "Escape") { closeVideo(); closeLightbox(); }
     if (lightbox && !lightbox.hidden) {
       if (e.key === "ArrowRight") step(1);
       if (e.key === "ArrowLeft")  step(-1);
@@ -400,7 +371,7 @@
   });
 
   /* ---------------------------------------------------------------
-     13. ANO NO RODAPÉ
+     12. ANO NO RODAPÉ
      --------------------------------------------------------------- */
   const year = $("#year");
   if (year) year.textContent = new Date().getFullYear();
