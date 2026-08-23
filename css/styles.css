@@ -927,17 +927,30 @@ h1, h2, h3 {
 
 /* ============ 9. RESPONSIVO ============ */
 @media (max-width: 1000px) {
-  /* hero em coluna única: texto, foto, números */
+  /* hero em coluna única: texto, foto, números — e tudo centralizado.
+     Em uma coluna só, a foto de 300px encostada à esquerda deixava metade
+     da tela vazia ao lado. */
   .hero__inner { grid-template-columns: 1fr; }
-  .hero__figure { max-width: 300px; }
+  .hero__figure { max-width: 300px; margin-inline: auto; }
+  .hero__col { text-align: center; }
+  .hero__stats { justify-content: center; text-align: center; }
+  .hero__stats li { align-items: center; }
+
+  /* O letter-spacing sobra depois da última letra e joga o centro óptico
+     para a esquerda; o text-indent devolve essa sobra. */
+  .hero__col .section__eyebrow { text-indent: 0.28em; }
+  .hero__stats span { text-indent: 0.2em; }
+
+  /* Rótulo de duas linhas com entrelinha de corpo de texto ficava solto */
+  .hero__stats span, .social-stat span { display: block; line-height: 1.5; }
 
   .works { grid-template-columns: repeat(4, 1fr); }
   .work, .work--wide { grid-column: span 2; }
   .about { grid-template-columns: 1fr; }
-  .about__media { max-width: 320px; }
+  .about__media { max-width: 320px; margin-inline: auto; }
   .contact { grid-template-columns: 1fr; }
   .gallery { grid-template-columns: repeat(3, 1fr); }
-  .social-stat { border-left: 0; border-top: 1px solid var(--line); }
+  .social-stat { border-left: 0; border-top: 1px solid var(--line); text-align: center; }
   .social-stat:first-child { border-top: 0; }
 }
 
