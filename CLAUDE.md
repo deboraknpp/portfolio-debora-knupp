@@ -203,9 +203,24 @@ isso se o aparelho estiver em "economia de dados" (`navigator.connection.saveDat
 O `reel-1.mp4` é o mais pesado (1,4 MB) por causa do **conteúdo**, não da
 codificação — recomprimir corta 8% e perde qualidade. Já foi medido; não repita.
 
-Duas coisas que só valem no toque, em `@media (hover: none)`: o botão de play dos
-cards fica sempre visível (sem mouse ele nunca apareceria) e os zooms de hover são
-desligados.
+O bloco `@media (hover: none)` guarda tudo que muda em tela de toque. Além do play
+sempre visível (sem mouse ele nunca apareceria) e dos zooms desligados, ele existe
+principalmente por **custo de pintura no iPhone**:
+
+- **Nada de `filter: blur()`.** Um desfoque de 150px faz o navegador alocar um
+  buffer que passa 450px de cada lado do elemento — num iPhone de 393pt a 3× dá
+  uns 3200×3200 pixels, duas vezes, e o `.bg-decor` é `fixed`, então é recomposto
+  a cada quadro. Os brilhos viram `radial-gradient`, que não aloca buffer nenhum.
+  **No PC o blur continua**: lá ele não pesa, e o desenho original é dele.
+- **O grão sai.** É um filtro SVG (`feTurbulence`) que precisa ser gerado antes do
+  primeiro desenho, e o Safari é lento nisso. A 10% de opacidade, em tela de
+  celular, ele é imperceptível.
+- **Nada de `backdrop-filter`** onde ele ficaria permanente na tela, como os quatro
+  botões de play. Fundo mais opaco dá a mesma leitura sem custo por quadro.
+
+E em todo `backdrop-filter` do arquivo vai junto o `-webkit-backdrop-filter`: o
+Safari só entende a propriedade sem prefixo a partir do 18, e no iOS 17 e
+anteriores a linha sem prefixo é simplesmente ignorada.
 
 ### O menu fica aberto, também no celular
 

@@ -180,6 +180,7 @@ h1, h2, h3 {
 .header.is-scrolled {
   padding-block: 0.9rem;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom-color: var(--line);
 }
@@ -469,6 +470,7 @@ h1, h2, h3 {
   border-radius: 50%;
   border: 1px solid rgba(242, 237, 230, 0.5);
   background: rgba(18, 16, 14, 0.35);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   opacity: 0;
   transform: scale(0.92);
@@ -537,6 +539,7 @@ h1, h2, h3 {
   place-items: center;
   padding: 1.5rem;
   background: rgba(10, 9, 8, 0.96);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   animation: fade 0.35s var(--ease);
 }
@@ -640,6 +643,7 @@ h1, h2, h3 {
   gap: 1rem;
   padding: clamp(1rem, 4vw, 3rem);
   background: rgba(10, 9, 8, 0.97);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   animation: fade 0.35s var(--ease);
 }
@@ -740,6 +744,7 @@ h1, h2, h3 {
   border-radius: 50%;
   border: 1px solid var(--line-strong);
   background: color-mix(in srgb, var(--bg) 86%, transparent);
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   color: var(--text);
   font-size: 1.6rem;
@@ -934,7 +939,7 @@ h1, h2, h3 {
 @media (max-width: 760px) {
   /* backdrop-filter recalcula a cada quadro de rolagem: caro no celular.
      Fundo quase opaco dá o mesmo resultado de graça. */
-  .header.is-scrolled { background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: none; }
+  .header.is-scrolled { background: color-mix(in srgb, var(--bg) 96%, transparent); -webkit-backdrop-filter: none; backdrop-filter: none; }
 
   /* Menu aberto, sem gaveta: são cinco palavras curtas e cabem numa tira.
      O corpo acompanha a largura da tela; em aparelho muito estreito a tira
@@ -1028,8 +1033,38 @@ h1, h2, h3 {
    Sem mouse não existe :hover — o que dependia dele precisa aparecer sozinho,
    senão no celular o play some e o card parece não ser clicável. */
 @media (hover: none) {
-  .work__play { opacity: 1; transform: none; }
+  /* Com o play sempre à vista são quatro backdrop-filter permanentes na tela,
+     e cada um reamostra o que está atrás a cada composição. Fundo mais opaco
+     no lugar: mesma leitura, sem custo por quadro. */
+  .work__play {
+    opacity: 1; transform: none;
+    background: rgba(18, 16, 14, 0.55);
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
   .work__btn:hover .work__thumb, .shot:hover img { transform: none; }
+
+  /* Sem `filter: blur()` aqui. Um desfoque de 150px obriga o navegador a
+     alocar um buffer que passa 450px de cada lado do elemento — num iPhone
+     de 393pt a 3x isso dá uns 3200x3200 pixels, duas vezes, e o .bg-decor
+     é `fixed`, então é recomposto a cada quadro de rolagem. É a conta mais
+     cara da página no celular. O gradiente radial dá a mesma bruma sem
+     buffer nenhum. No PC o blur continua — lá ele não pesa. */
+  .bg-glow { filter: none; opacity: 1; border-radius: 0; }
+  .bg-glow--1 {
+    width: 130vw; height: 130vw; top: -55vw; right: -53vw;
+    background: radial-gradient(closest-side,
+                  rgba(107, 74, 53, 0.30), rgba(107, 74, 53, 0.14) 45%, transparent 72%);
+  }
+  .bg-glow--2 {
+    width: 120vw; height: 120vw; bottom: -55vw; left: -56vw;
+    background: radial-gradient(closest-side,
+                  rgba(63, 70, 64, 0.28), rgba(63, 70, 64, 0.13) 45%, transparent 72%);
+  }
+
+  /* O grão é um filtro SVG (feTurbulence) que o navegador precisa gerar antes
+     de desenhar a tela, e o Safari é lento nisso. A 10% de opacidade, numa
+     tela de celular, ele é imperceptível — não vale o que custa. */
+  .bg-grain { display: none; }
 }
 
 /* Celular: a capa aparece com ~350px de largura, então a versão de 900px
