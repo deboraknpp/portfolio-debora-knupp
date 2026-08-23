@@ -950,6 +950,19 @@ h1, h2, h3 {
   .nav__link::after { left: 0.3rem; right: 0.3rem; }
   .nav__link--cta { margin-left: 0; border: 0; color: var(--accent); }
 
+  /* Sobre: a foto de lado, à esquerda, com o texto correndo à direita dela.
+     Ocupando a largura inteira, ela empurrava todo o texto para baixo. Float
+     em vez de duas colunas de grid: passando a altura da foto, o texto volta
+     a usar a largura toda, em vez de ficar preso numa coluna estreita. */
+  .about { display: block; }
+  .about__media {
+    float: left;
+    width: 44%;
+    max-width: none;
+    margin: 0.4rem 1.1rem 0.6rem 0;
+  }
+  .skills__label { clear: left; }
+
   /* Áreas de atuação: três por linha, como no PC. Uma por linha virava uma
      coluna de seis e empurrava o Contato para longe. */
   .skills { grid-template-columns: repeat(3, 1fr); gap: 1.1rem 0.7rem; }
