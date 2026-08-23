@@ -355,33 +355,38 @@
   }
 
   /* ---------------------------------------------------------------
-     11. CARROSSEL DA SEÇÃO SOCIAL
-     As setas rolam dois cards por clique e somem ao chegar na ponta.
+     11. FAIXAS QUE ROLAM PARA O LADO
+     Vale para a faixa de Reels e, no celular, para o mosaico da galeria —
+     qualquer bloco marcado com data-strip no HTML. As setas rolam dois cards
+     por clique e somem nas pontas; somem também quando não há o que rolar,
+     que é o caso da galeria no PC, onde o mosaico cabe inteiro na tela.
      Arrastar com o dedo ou o trackpad continua funcionando normalmente.
      --------------------------------------------------------------- */
-  const feed = $("#feed");
-  const feedPrev = $(".feed-nav--prev");
-  const feedNext = $(".feed-nav--next");
+  $$("[data-strip]").forEach((faixa) => {
+    const trilho = $(".feed, .gallery", faixa);
+    const anterior = $(".feed-nav--prev", faixa);
+    const proximo = $(".feed-nav--next", faixa);
+    if (!trilho || !anterior || !proximo) return;
 
-  if (feed && feedPrev && feedNext) {
-    const cardStep = () => {
-      const card = $(".post", feed);
-      return card ? (card.offsetWidth + 22) * 2 : 480;   // 22 = o gap entre cards
+    const passo = () => {
+      const card = trilho.firstElementChild;
+      const vao = parseFloat(getComputedStyle(trilho).columnGap) || 22;
+      return card ? (card.offsetWidth + vao) * 2 : 480;
     };
 
-    const updateArrows = () => {
-      const max = feed.scrollWidth - feed.clientWidth;
-      feedPrev.disabled = feed.scrollLeft < 4;
-      feedNext.disabled = feed.scrollLeft > max - 4;
+    const atualizarSetas = () => {
+      const max = trilho.scrollWidth - trilho.clientWidth;
+      anterior.disabled = trilho.scrollLeft < 4;
+      proximo.disabled = trilho.scrollLeft > max - 4;
     };
 
-    feedPrev.addEventListener("click", () => feed.scrollBy({ left: -cardStep(), behavior: "smooth" }));
-    feedNext.addEventListener("click", () => feed.scrollBy({ left: cardStep(), behavior: "smooth" }));
+    anterior.addEventListener("click", () => trilho.scrollBy({ left: -passo(), behavior: "smooth" }));
+    proximo.addEventListener("click", () => trilho.scrollBy({ left: passo(), behavior: "smooth" }));
 
-    feed.addEventListener("scroll", updateArrows, { passive: true });
-    window.addEventListener("resize", updateArrows);
-    updateArrows();
-  }
+    trilho.addEventListener("scroll", atualizarSetas, { passive: true });
+    window.addEventListener("resize", atualizarSetas);
+    atualizarSetas();
+  });
 
   /* ---------------------------------------------------------------
      12. TECLADO — Esc fecha, setas navegam

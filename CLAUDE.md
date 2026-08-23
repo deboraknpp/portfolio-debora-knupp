@@ -100,7 +100,8 @@ trabalho precisa ganhar sua linha `!assets/fotos/NOME.jpeg`** ou some no deploy.
 bloco começa consultando seus elementos e sai se não encontrar (`if (!el) return`),
 então **remover uma seção do HTML não quebra o resto do site**. Ganchos por `id`:
 `#header`, `#nav`, `#nav-toggle`, `#hero-carousel`, `#works-grid`,
-`#gallery`, `#lightbox*`, `#vmodal*`, `#feed`, `#year`.
+`#gallery`, `#lightbox*`, `#vmodal*`, `#feed`, `#year` — mais o atributo `data-strip`,
+que marca as faixas que rolam para o lado (ver "Faixas que rolam para o lado").
 
 Três padrões se repetem no JS e devem ser mantidos ao criar recursos novos:
 
@@ -204,8 +205,20 @@ codificação — recomprimir corta 8% e perde qualidade. Já foi medido; não r
 
 Duas coisas que só valem no toque, em `@media (hover: none)`: o botão de play dos
 cards fica sempre visível (sem mouse ele nunca apareceria) e os zooms de hover são
-desligados. As setas da faixa de Reels somem abaixo de 760px, onde cobririam um
-quarto da tira — o dedo arrasta, e o card cortado na borda já avisa que há mais.
+desligados.
+
+### Faixas que rolam para o lado
+
+São duas, e o mesmo bloco 11 do JS cuida das duas: qualquer elemento com
+`data-strip` no HTML, contendo um trilho (`.feed` ou `.gallery`) e os dois botões
+`.feed-nav`. As setas rolam dois cards por clique e se desabilitam sozinhas nas
+pontas — e também quando não há o que rolar, que é como a galeria no PC esconde
+as setas sem precisar de regra própria.
+
+**No celular a galeria vira o mesmo mosaico, deitado**: abaixo de 760px são duas
+linhas correndo para o lado (`grid-auto-flow: column dense`), com as fotos altas
+ocupando as duas, como no PC. Espremer 13 fotos em uma ou duas colunas verticais
+dava uma fila de vários metros de rolagem.
 
 ## Deploy
 
