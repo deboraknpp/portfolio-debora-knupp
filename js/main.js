@@ -11,28 +11,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------------------------------------------------------------
-     1. TEMA CLARO / ESCURO  (fica salvo no navegador)
-     --------------------------------------------------------------- */
-  const root = document.documentElement;
-  const themeBtn = $("#theme-toggle");
-  const savedTheme = localStorage.getItem("tema");
-
-  if (savedTheme) {
-    root.setAttribute("data-theme", savedTheme);
-  } else if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-    root.setAttribute("data-theme", "light");
-  }
-
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
-      root.setAttribute("data-theme", next);
-      localStorage.setItem("tema", next);
-    });
-  }
-
-  /* ---------------------------------------------------------------
-     2. HEADER — fundo ao rolar a página
+     1. HEADER — fundo ao rolar a página
      --------------------------------------------------------------- */
   const header = $("#header");
   const onScroll = () => header && header.classList.toggle("is-scrolled", window.scrollY > 30);
@@ -40,7 +19,7 @@
   window.addEventListener("scroll", onScroll, { passive: true });
 
   /* ---------------------------------------------------------------
-     3. MENU MOBILE
+     2. MENU MOBILE
      --------------------------------------------------------------- */
   const navToggle = $("#nav-toggle");
   const nav = $("#nav");
@@ -69,7 +48,7 @@
   }
 
   /* ---------------------------------------------------------------
-     4. REVEAL — elementos aparecem conforme o scroll
+     3. REVEAL — elementos aparecem conforme o scroll
      --------------------------------------------------------------- */
   const revealItems = $$(".reveal");
 
@@ -90,7 +69,7 @@
   }
 
   /* ---------------------------------------------------------------
-     5. LINK ATIVO NO MENU conforme a seção visível
+     4. LINK ATIVO NO MENU conforme a seção visível
      --------------------------------------------------------------- */
   const sections = $$("main section[id]");
   const navLinks = $$(".nav__link");
@@ -111,7 +90,7 @@
   }
 
   /* ---------------------------------------------------------------
-     6. CONTADORES ANIMADOS (números do hero e do social)
+     5. CONTADORES ANIMADOS (números do hero e do social)
      --------------------------------------------------------------- */
   const counters = $$("[data-count]");
 
@@ -149,7 +128,7 @@
   }
 
   /* ---------------------------------------------------------------
-     7. FILTRO DOS DESTAQUES
+     6. FILTRO DOS DESTAQUES
      --------------------------------------------------------------- */
   const filters = $$(".filter");
   const works = $$("#works-grid .work");
@@ -168,7 +147,7 @@
   });
 
   /* ---------------------------------------------------------------
-     8. MODAL DE VÍDEO (YouTube / Vimeo)
+     7. MODAL DE VÍDEO (YouTube / Vimeo)
      O vídeo só é carregado ao clicar — a página abre rápido.
      --------------------------------------------------------------- */
   const vmodal = $("#vmodal");
@@ -222,7 +201,7 @@
   }
 
   /* ---------------------------------------------------------------
-     9. LIGHTBOX DA GALERIA DE FOTOS
+     8. LIGHTBOX DA GALERIA DE FOTOS
      Funciona tanto com <img> quanto com os placeholders coloridos.
      --------------------------------------------------------------- */
   const lightbox = $("#lightbox");
@@ -289,14 +268,18 @@
   }
 
   /* ---------------------------------------------------------------
-     10. PREVIEWS EM VÍDEO NOS CARDS DE SOCIAL
+     9. PREVIEWS EM VÍDEO NOS CARDS DE SOCIAL
      Tocam em loop e sem áudio, só enquanto o card está na tela — fora
      dela o vídeo pausa, para não gastar bateria nem dados de graça.
      Se o arquivo não existir, o card segue mostrando a capa.
      --------------------------------------------------------------- */
   const previews = $$(".post__video");
 
-  if (previews.length && !reduceMotion && "IntersectionObserver" in window) {
+  // Com "economia de dados" ligada no celular, nenhum preview é baixado:
+  // os cards ficam na capa, que não custa nada.
+  const economiaDeDados = navigator.connection && navigator.connection.saveData;
+
+  if (previews.length && !reduceMotion && !economiaDeDados && "IntersectionObserver" in window) {
     const playObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -320,7 +303,7 @@
   }
 
   /* ---------------------------------------------------------------
-     11. CARROSSEL DO HERO
+     10. CARROSSEL DO HERO
      As fotos trocam sozinhas, com fade. Pausa quando o hero sai da tela
      e nem começa para quem desativou animações no sistema.
      --------------------------------------------------------------- */
@@ -334,16 +317,29 @@
       let current = 0;
       let timer = null;
 
+      // As fotos 2 e 3 vêm com data-src: ficam fora do carregamento da página e
+      // são buscadas 4,5s antes de entrarem em cena. Sem isso o navegador
+      // baixaria as três de uma vez (o loading="lazy" não adia o que está
+      // na área visível, mesmo invisível por opacity).
+      const armar = (i) => {
+        const img = shots[i];
+        if (img && img.dataset.src) { img.src = img.dataset.src; delete img.dataset.src; }
+      };
+
       const show = (next) => {
         shots[current].classList.remove("is-active");
         if (dots[current]) dots[current].classList.remove("is-active");
         current = next;
         shots[current].classList.add("is-active");
         if (dots[current]) dots[current].classList.add("is-active");
+        armar((current + 1) % shots.length);          // já deixa a próxima pronta
       };
 
       const start = () => {
-        if (!timer) timer = setInterval(() => show((current + 1) % shots.length), 4500);
+        if (!timer) {
+          armar(1);
+          timer = setInterval(() => show((current + 1) % shots.length), 4500);
+        }
       };
       const stop = () => { clearInterval(timer); timer = null; };
 
@@ -359,7 +355,7 @@
   }
 
   /* ---------------------------------------------------------------
-     12. CARROSSEL DA SEÇÃO SOCIAL
+     11. CARROSSEL DA SEÇÃO SOCIAL
      As setas rolam dois cards por clique e somem ao chegar na ponta.
      Arrastar com o dedo ou o trackpad continua funcionando normalmente.
      --------------------------------------------------------------- */
@@ -388,7 +384,7 @@
   }
 
   /* ---------------------------------------------------------------
-     13. TECLADO — Esc fecha, setas navegam
+     12. TECLADO — Esc fecha, setas navegam
      --------------------------------------------------------------- */
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") { closeVideo(); closeLightbox(); closeNav(); }
@@ -399,7 +395,7 @@
   });
 
   /* ---------------------------------------------------------------
-     14. ANO NO RODAPÉ
+     13. ANO NO RODAPÉ
      --------------------------------------------------------------- */
   const year = $("#year");
   if (year) year.textContent = new Date().getFullYear();

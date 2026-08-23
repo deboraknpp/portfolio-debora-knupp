@@ -40,6 +40,11 @@ assets/fotos/*
 !assets/fotos/lacos.jpeg
 !assets/fotos/ppac.jpeg
 !assets/fotos/quadrienal.jpeg
+# Cada capa tem um par: a grande e a "-sm", que o celular carrega no lugar.
+!assets/fotos/extraordinario-sm.jpeg
+!assets/fotos/lacos-sm.jpeg
+!assets/fotos/ppac-sm.jpeg
+!assets/fotos/quadrienal-sm.jpeg
 !assets/fotos/LEIA-ME.txt
 
 # Netlify

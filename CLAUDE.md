@@ -53,6 +53,10 @@ ffmpeg -y -i ORIGINAL.jpg -vf "scale='min(800,iw)':'min(800,ih)':force_original_
 # Preview de Reel: 6s, vertical, SEM áudio, ~1 MB
 ffmpeg -y -i ORIGINAL.mp4 -t 6 -an -vf "scale=-2:1280,fps=30" -c:v libx264 -crf 28 -preset slow -pix_fmt yuv420p -movflags +faststart assets/reels/reel-N.mp4
 
+# Capa de trabalho em Destaques: a do desktop e a do celular (vale ate 560px)
+ffmpeg -y -i ORIGINAL.jpg -q:v 4 assets/fotos/NOME.jpeg
+ffmpeg -y -i ORIGINAL.jpg -vf "scale=900:-2" -q:v 4 assets/fotos/NOME-sm.jpeg
+
 # Foto do carrossel do hero: 2:3, 934px de largura
 ffmpeg -y -i ORIGINAL.jpg -vf "scale=934:-2" -q:v 3 assets/fotos/hero-N.jpg
 ```
@@ -80,7 +84,7 @@ some, vídeo não toca):
 | `assets/reels/reel-N.mp4` | previews da seção Social (N de 1 a 10) |
 | `assets/fotos/hero.jpg`, `hero-2.jpg`, `hero-3.jpg` | carrossel do hero |
 | `assets/fotos/perfil.jpg` | foto da seção Sobre |
-| `assets/fotos/NOME.jpeg` + `.work__thumb--NOME` no CSS | capa de cada trabalho em Destaques |
+| `assets/fotos/NOME.jpeg` + `NOME-sm.jpeg` + `.work__thumb--NOME` no CSS | capa de cada trabalho em Destaques — a `-sm` e a que o celular carrega |
 | `assets/curriculo-debora-knupp.pdf` | currículo, link na seção Contato (fora de `fotos/`, na raiz de `assets/`) |
 
 Toda foto do site mora direto em `assets/fotos/`, sem subpasta. Ao lado dela ficam
@@ -92,10 +96,10 @@ trabalho precisa ganhar sua linha `!assets/fotos/NOME.jpeg`** ou some no deploy.
 
 ## Arquitetura
 
-**`js/main.js`** — IIFE única, dividida em 14 blocos numerados e independentes. Cada
+**`js/main.js`** — IIFE única, dividida em 13 blocos numerados e independentes. Cada
 bloco começa consultando seus elementos e sai se não encontrar (`if (!el) return`),
 então **remover uma seção do HTML não quebra o resto do site**. Ganchos por `id`:
-`#header`, `#nav`, `#nav-toggle`, `#theme-toggle`, `#hero-carousel`, `#works-grid`,
+`#header`, `#nav`, `#nav-toggle`, `#hero-carousel`, `#works-grid`,
 `#gallery`, `#lightbox*`, `#vmodal*`, `#feed`, `#year`.
 
 Três padrões se repetem no JS e devem ser mantidos ao criar recursos novos:
@@ -109,10 +113,13 @@ Três padrões se repetem no JS e devem ser mantidos ao criar recursos novos:
   mostrando a capa; se a capa não existir, o `background-image` tem um gradiente
   depois da vírgula. Nunca deixe um buraco visível quando o arquivo faltar.
 
-**`css/styles.css`** — 9 seções numeradas, com índice no topo. Toda a identidade sai
-dos tokens em `:root` (carvão quente `#12100e`, marfim `#f2ede6`, champagne
-`#dcc7a8`); o tema claro só redefine esses tokens em `[data-theme="light"]`, e o
-toggle grava a escolha em `localStorage` (chave `tema`). Estilo é **"escuro
+**`css/styles.css`** — 10 seções numeradas, com índice no topo. Toda a identidade
+sai dos tokens em `:root` (carvão quente `#12100e`, marfim `#f2ede6`, champagne
+`#dcc7a8`). **Só existe o tema escuro**: o alternador claro/escuro foi removido a
+pedido da titular em agosto/2026 — saíram os tokens `[data-theme="light"]`, o botão
+do header, os ícones sol/lua e o bloco de JS que gravava a escolha em `localStorage`
+(chave `tema`). `color-scheme: dark` no `:root` faz os controles nativos do navegador
+acompanharem. Não ressuscite sem ela pedir. Estilo é **"escuro
 editorial"**: Playfair Display peso 400 nos títulos, fios de 1px no lugar de caixas,
 imagens dessaturadas que ganham cor no hover, cantos de 3px.
 
@@ -167,6 +174,38 @@ ainda faltam no site: formação (UNASP), idiomas, e o nome exato do prêmio ("V
 Popular de Melhor Curta · CineRondônia 2025"). Ele traz também o e-mail pessoal
 dela, já público por estar nesse PDF no ar; o telefone já aparecia no link do
 WhatsApp.
+
+## Desempenho: o que já foi medido (não desfaça no escuro)
+
+O peso do site é imagem. HTML, CSS e JS somam **17 KB** depois da compressão da
+Netlify — mexer neles não muda nada. Em agosto/2026 o primeiro carregamento no
+celular caiu de **~3,1 MB para ~600 KB** assim:
+
+- **Capa de Destaques é `background-image`**, e fundo de CSS não tem `loading=
+  "lazy"`: o navegador baixa no carregamento mesmo o card estando longe, embaixo da
+  dobra. As quatro somavam 2,2 MB; recomprimidas a `-q:v 4` **na mesma resolução**
+  ficaram em 472 KB (SSIM 0,97 — imperceptível). Abaixo de 560px o CSS troca pela
+  `-sm` de 900px, e aí são 236 KB.
+- **No hero só `hero.jpg` tem `src`.** As outras duas usam `data-src`, e o bloco 10
+  do JS busca cada uma 4,5s antes de entrar em cena. `loading="lazy"` não servia: as
+  três ficam empilhadas dentro da área visível, e o lazy só adia o que está fora da
+  tela — estar invisível por `opacity: 0` não conta.
+- **A folha do Google Fonts pede só os 4 cortes que o CSS usa** (Playfair 400 e 400
+  itálico, Inter 300 e 400). Cada peso a mais é um arquivo a mais para baixar.
+- **`.bg-grain` cobre a tela (`inset: 0`), não 4× ela.** A textura se repete, então
+  o `inset: -50%` antigo só multiplicava a área a rasterizar.
+- **No celular o header rolado não usa `backdrop-filter`** — esse sim recalcula a
+  cada quadro de rolagem. Fundo a 96% de opacidade dá o mesmo resultado de graça.
+
+Os reels seguem com `preload="none"`: só baixam quando o card entra na tela, e nem
+isso se o aparelho estiver em "economia de dados" (`navigator.connection.saveData`).
+O `reel-1.mp4` é o mais pesado (1,4 MB) por causa do **conteúdo**, não da
+codificação — recomprimir corta 8% e perde qualidade. Já foi medido; não repita.
+
+Duas coisas que só valem no toque, em `@media (hover: none)`: o botão de play dos
+cards fica sempre visível (sem mouse ele nunca apareceria) e os zooms de hover são
+desligados. As setas da faixa de Reels somem abaixo de 760px, onde cobririam um
+quarto da tira — o dedo arrasta, e o card cortado na borda já avisa que há mais.
 
 ## Deploy
 

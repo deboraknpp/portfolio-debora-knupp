@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,7 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -47,16 +47,6 @@
       </nav>
 
       <div class="header__actions">
-        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Alternar tema claro/escuro" title="Alternar tema">
-          <svg class="icon icon--sun" viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="4" />
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-          </svg>
-          <svg class="icon icon--moon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" />
-          </svg>
-        </button>
-
         <button class="icon-btn nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
           <span class="burger"></span>
         </button>
@@ -89,13 +79,15 @@
 
         <!-- ============ EDITE AQUI: fotos do carrossel ============
              Trocam sozinhas a cada 4,5s. Para acrescentar outra, copie uma linha
-             <img> e coloque mais um <i> nos tracinhos abaixo. -->
+             <img> e coloque mais um <i> nos tracinhos abaixo.
+             Só a primeira usa src=; as outras usam data-src= para ficarem fora
+             do carregamento inicial — o carrossel busca cada uma na hora certa. -->
         <figure class="hero__figure reveal" id="hero-carousel">
           <img class="is-active" src="assets/fotos/hero.jpg" width="934" height="1400" fetchpriority="high"
                alt="Claquete da série Extraordinário erguida em um set de gravação" />
-          <img src="assets/fotos/hero-2.jpg" width="934" height="1400" loading="lazy"
+          <img data-src="assets/fotos/hero-2.jpg" width="934" height="1400"
                alt="Débora Knupp fotografando com teleobjetiva durante uma gravação" />
-          <img src="assets/fotos/hero-3.jpg" width="934" height="1400" loading="lazy"
+          <img data-src="assets/fotos/hero-3.jpg" width="934" height="1400"
                alt="Débora Knupp operando uma câmera em gimbal em locação externa" />
           <span class="hero__dots" aria-hidden="true">
             <i class="is-active"></i><i></i><i></i>

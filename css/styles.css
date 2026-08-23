@@ -7,7 +7,7 @@
      2. Base e utilitários       7. Widget: Social
      3. Header e navegação       8. Sobre / Contato / Footer
      4. Hero                     9. Responsivo
-     5. Widget: Destaques
+     5. Widget: Destaques        10. Telas de toque
    ===================================================================== */
 
 /* ============ 1. TOKENS ============ */
@@ -36,24 +36,10 @@
   --container: 1240px;
   --section-y: clamp(84px, 12vw, 172px);
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
-}
 
-/* Modo claro: o mesmo editorial, em papel creme */
-[data-theme="light"] {
-  --bg:        #faf7f2;
-  --bg-2:      #f3efe8;
-  --text:      #1a1613;
-  --muted:     #6b6157;
-  --faint:     #9a9086;
-
-  --accent:    #9c6b45;
-  --accent-2:  #b8735a;
-
-  --line:        rgba(26, 22, 19, 0.14);
-  --line-strong: rgba(26, 22, 19, 0.30);
-  --wash:        rgba(26, 22, 19, 0.028);
-
-  --shadow: 0 26px 55px -30px rgba(60, 45, 30, 0.35);
+  /* Só existe tema escuro: os controles nativos do navegador
+     (barra de rolagem, campos) acompanham. */
+  color-scheme: dark;
 }
 
 /* ============ 2. BASE ============ */
@@ -75,6 +61,7 @@ body {
   line-height: 1.75;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;   /* sem o flash azul no toque */
 }
 
 img, video { max-width: 100%; display: block; height: auto; }
@@ -107,17 +94,14 @@ h1, h2, h3 {
 .bg-decor { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 
 .bg-grain {
-  position: absolute; inset: -50%;
+  position: absolute; inset: 0;
   opacity: 0.10;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
 }
-[data-theme="light"] .bg-grain { opacity: 0.05; }
 
 .bg-glow { position: absolute; border-radius: 50%; filter: blur(150px); }
 .bg-glow--1 { width: 48vw; height: 48vw; top: -16vw; right: -12vw; background: #6b4a35; opacity: 0.30; }
 .bg-glow--2 { width: 42vw; height: 42vw; bottom: -16vw; left: -14vw; background: #3f4640; opacity: 0.28; }
-[data-theme="light"] .bg-glow--1 { background: #e6cdae; opacity: 0.55; }
-[data-theme="light"] .bg-glow--2 { background: #d8dcd2; opacity: 0.5; }
 
 /* --- Ritmo das seções: separadas por um fio, não por blocos --- */
 .section { padding-block: var(--section-y); position: relative; }
@@ -152,8 +136,6 @@ h1, h2, h3 {
   background: none;
   -webkit-text-fill-color: currentColor;
 }
-
-.icon { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
 
 /* Links com fio embaixo, no lugar de cor forte */
 .link {
@@ -256,10 +238,6 @@ h1, h2, h3 {
   transition: color 0.3s, border-color 0.3s;
 }
 .icon-btn:hover { color: var(--text); border-color: var(--line-strong); }
-
-.icon--sun { display: none; }
-[data-theme="light"] .icon--sun { display: block; }
-[data-theme="light"] .icon--moon { display: none; }
 
 .nav-toggle { display: none; }
 .burger, .burger::before, .burger::after {
@@ -457,6 +435,9 @@ h1, h2, h3 {
   transform: scaleX(0);
   transition: transform 0.4s var(--ease);
 }
+/* Área de toque maior que o texto, sem mexer no desenho: no celular o alvo
+   passa de 14px para ~44px de altura. */
+.filter::before { content: ""; position: absolute; inset: -14px -10px; }
 .filter:hover { color: var(--text); }
 .filter.is-active { color: var(--text); }
 .filter.is-active::after { transform: scaleX(1); }
@@ -659,10 +640,13 @@ h1, h2, h3 {
 }
 .shot--tall { grid-row: span 2; }
 
-.shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shot img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.9s var(--ease), filter 0.6s;
+}
 /* fotos verticais em slot baixo: ancora o corte no assunto, que está em cima */
 .shot--top img { object-position: center 32%; }
-.shot:hover .shot:hover img { transform: scale(1.04); filter: saturate(0.95); }
+.shot:hover img, .shot:focus-visible img { transform: scale(1.04); filter: saturate(0.95); }
 
 .shot__cap {
   position: absolute;
@@ -771,6 +755,7 @@ h1, h2, h3 {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
+  overscroll-behavior-x: contain;     /* arrastar até a ponta não volta a página */
   scrollbar-width: none;              /* Firefox */
   -ms-overflow-style: none;           /* Edge antigo */
   padding-block: 3px;                 /* respiro para o anel de foco */
@@ -959,6 +944,10 @@ h1, h2, h3 {
 @media (max-width: 760px) {
   .nav-toggle { display: grid; }
 
+  /* backdrop-filter recalcula a cada quadro de rolagem: caro no celular.
+     Fundo quase opaco dá o mesmo resultado de graça. */
+  .header.is-scrolled { background: color-mix(in srgb, var(--bg) 96%, transparent); backdrop-filter: none; }
+
   .nav {
     position: fixed;
     inset: 0 0 0 auto;
@@ -983,9 +972,9 @@ h1, h2, h3 {
 
   .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 170px; gap: 1rem; }
 
-  /* setas para dentro da tela — fora dela ficariam cortadas */
-  .feed-nav { left: 2px; width: 42px; height: 42px; font-size: 1.35rem; }
-  .feed-nav--next { left: auto; right: 2px; }
+  /* No celular as setas cobririam 1/4 da faixa. O dedo já arrasta, e o card
+     cortado na borda avisa que há mais coisa ao lado. */
+  .feed-nav { display: none; }
 
   .hero { min-height: auto; padding-block: 150px 90px; }
   .hero__stats { gap: 2rem 3rem; }
@@ -1004,6 +993,28 @@ h1, h2, h3 {
 }
 
 @media (max-width: 420px) {
-  .gallery { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+  /* segue em 2 colunas: uma coluna só viraria uma fila de 13 fotos */
+  .gallery { grid-auto-rows: 150px; gap: 0.8rem; }
   .btn { width: 100%; justify-content: center; }
+}
+
+/* ============ 10. TELAS DE TOQUE ============
+   Sem mouse não existe :hover — o que dependia dele precisa aparecer sozinho,
+   senão no celular o play some e o card parece não ser clicável. */
+@media (hover: none) {
+  .work__play { opacity: 1; transform: none; }
+  .work__btn:hover .work__thumb, .shot:hover img { transform: none; }
+}
+
+/* Celular: a capa aparece com ~350px de largura, então a versão de 900px
+   basta e pesa um terço. Acima disso continua valendo a original. */
+@media (max-width: 560px) {
+  .work__thumb--extraordinario { background-image: url("../assets/fotos/extraordinario-sm.jpeg"),
+                    linear-gradient(150deg, #2b4a5e, #16232f 60%, #0e1218); }
+  .work__thumb--lacos { background-image: url("../assets/fotos/lacos-sm.jpeg"),
+                    linear-gradient(150deg, #5e4738, #2f2319 60%, #17110d); }
+  .work__thumb--ppac { background-image: url("../assets/fotos/ppac-sm.jpeg"),
+                    linear-gradient(150deg, #4a5a52, #23302b 60%, #121815); }
+  .work__thumb--quadrienal { background-image: url("../assets/fotos/quadrienal-sm.jpeg"),
+                    linear-gradient(150deg, #6d5a34, #352c19 60%, #191410); }
 }

@@ -99,8 +99,8 @@ Tudo está no começo do `css/styles.css`, no bloco `:root`:
 --accent-2: #b8735a;   /* terracota — só em pequenos toques */
 ```
 
-Troque esses valores e o site inteiro muda de identidade. O tema claro (papel
-creme) fica logo abaixo, no bloco `[data-theme="light"]`.
+Troque esses valores e o site inteiro muda de identidade. O site tem só o tema
+escuro — não existe versão em papel claro.
 
 ---
 
@@ -172,7 +172,8 @@ continua mais prática pelo deploy automático a cada push.
 - Navegação completa por teclado (Tab, Esc fecha modais, setas na galeria)
 - Respeita `prefers-reduced-motion` de quem desativou animações
 - Vídeos carregam só ao clicar; nenhuma biblioteca externa
-- Tema claro/escuro salvo no navegador
+- Imagens dimensionadas por tela: no celular as capas pesam um terço
+- Com "economia de dados" ligada, os previews em vídeo nem são baixados
 
 ---
 
