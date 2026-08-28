@@ -1094,3 +1094,61 @@ h1, h2, h3 {
   .work__thumb--quadrienal { background-image: url("../assets/fotos/quadrienal-sm.jpeg"),
                     linear-gradient(150deg, #6d5a34, #352c19 60%, #191410); }
 }
+
+/* Fotos que abraçam a tela, no desktop: em vez de uma caixa arredondada com
+   fundo sobrando ao lado, a foto ocupa a metade inteira, de topo a base, e um
+   degradê dissolve a borda interna no fundo — sem corte reto. Abaixo de
+   1000px o layout já vira coluna única, com a foto centralizada, então isto
+   fica restrito ao desktop. */
+@media (min-width: 1001px) {
+  /* --- Hero --- */
+  /* A figure sai do fluxo, mas a coluna do grid continua reservada (vazia):
+     é ela que impede o texto de correr por baixo da foto. */
+  .hero__figure {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(48%, 780px);
+    aspect-ratio: auto;
+    margin: 0;
+  }
+  .hero__col { position: relative; z-index: 1; }
+  /* os números atravessavam as duas colunas: agora parariam sob a foto */
+  .hero__stats { grid-column: 1; position: relative; z-index: 1; }
+  .hero__figure img { border-radius: 0; }
+
+  /* Borda esquerda dissolvida no fundo, e topo escurecido para o menu
+     continuar legível por cima da foto. */
+  .hero__figure::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 62%, transparent) 22%, transparent 58%),
+      linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent) 0%, transparent 24%);
+  }
+  .hero__figure::after { border-radius: 0; height: 20%; }
+  .hero__dots { z-index: 2; }
+
+  /* --- Sobre --- */
+  .about__media {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(42%, 640px);
+    margin: 0;
+  }
+  .about__media img {
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+  }
+  /* mesma dissolução, espelhada: aqui é a borda direita que encosta no texto */
+  .about__media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(270deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 62%, transparent) 20%, transparent 55%);
+  }
+}
