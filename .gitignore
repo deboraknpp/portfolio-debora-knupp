@@ -36,6 +36,9 @@ assets/fotos/*
 !assets/fotos/hero-2.jpg
 !assets/fotos/hero-3.jpg
 !assets/fotos/perfil.jpg
+# Prints dos perfis gerenciados (antes/depois) da seção "04 — Perfis"
+!assets/fotos/perfil-*-antes.jpg
+!assets/fotos/perfil-*-depois.jpg
 !assets/fotos/extraordinario.jpeg
 !assets/fotos/lacos.jpeg
 !assets/fotos/ppac.jpeg

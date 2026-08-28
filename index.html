@@ -41,6 +41,7 @@
           <li><a class="nav__link" href="#destaques">Destaques</a></li>
           <li><a class="nav__link" href="#fotos">Fotos</a></li>
           <li><a class="nav__link" href="#social">Social</a></li>
+          <li><a class="nav__link" href="#perfis">Perfis</a></li>
           <li><a class="nav__link" href="#sobre">Sobre</a></li>
           <li><a class="nav__link nav__link--cta" href="#contato">Contato</a></li>
         </ul>
@@ -387,12 +388,78 @@
       </div>
     </section>
 
+    <!-- ===================== PERFIS GERENCIADOS ===================== -->
+    <section class="section" id="perfis">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">04 — Perfis</p>
+          <h2 class="section__title">Antes e depois</h2>
+        </header>
+
+        <!-- ============ EDITE AQUI: perfis gerenciados ============
+             Troque "Perfil N" pelo nome real de cada conta. As imagens entram
+             em assets/fotos/ com estes nomes exatos:
+                 perfil-N-antes.jpg     perfil-N-depois.jpg
+             Enquanto o arquivo não existir, o quadro mostra um degradê — nunca
+             uma imagem quebrada. Para acrescentar um perfil, copie um <article>
+             inteiro, troque o número e some as linhas correspondentes no CSS
+             (.profile__img--N-*) e no .gitignore. -->
+        <div class="profiles">
+          <article class="profile reveal">
+            <header class="profile__head">
+              <h3 class="profile__name">Perfil 1</h3>
+            </header>
+            <div class="profile__pair">
+              <figure class="profile__shot">
+                <span class="profile__img profile__img--1-antes" aria-hidden="true"></span>
+                <figcaption class="profile__cap">Antes</figcaption>
+              </figure>
+              <figure class="profile__shot">
+                <span class="profile__img profile__img--1-depois" aria-hidden="true"></span>
+                <figcaption class="profile__cap">Depois</figcaption>
+              </figure>
+            </div>
+          </article>
+          <article class="profile reveal">
+            <header class="profile__head">
+              <h3 class="profile__name">Perfil 2</h3>
+            </header>
+            <div class="profile__pair">
+              <figure class="profile__shot">
+                <span class="profile__img profile__img--2-antes" aria-hidden="true"></span>
+                <figcaption class="profile__cap">Antes</figcaption>
+              </figure>
+              <figure class="profile__shot">
+                <span class="profile__img profile__img--2-depois" aria-hidden="true"></span>
+                <figcaption class="profile__cap">Depois</figcaption>
+              </figure>
+            </div>
+          </article>
+          <article class="profile reveal">
+            <header class="profile__head">
+              <h3 class="profile__name">Perfil 3</h3>
+            </header>
+            <div class="profile__pair">
+              <figure class="profile__shot">
+                <span class="profile__img profile__img--3-antes" aria-hidden="true"></span>
+                <figcaption class="profile__cap">Antes</figcaption>
+              </figure>
+              <figure class="profile__shot">
+                <span class="profile__img profile__img--3-depois" aria-hidden="true"></span>
+                <figcaption class="profile__cap">Depois</figcaption>
+              </figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ===================== SOBRE ===================== -->
     <section class="section" id="sobre">
       <div class="container">
         <div class="about">
           <header class="about__head reveal">
-            <p class="section__eyebrow">04 — Sobre</p>
+            <p class="section__eyebrow">05 — Sobre</p>
             <h2 class="section__title">Débora Knupp</h2>
             <!-- ============ EDITE AQUI: frase de abertura do Sobre ============ -->
             <p class="about__quote">
@@ -437,7 +504,7 @@
       <div class="container">
         <div class="contact reveal">
           <div class="contact__intro">
-            <p class="section__eyebrow">05 — Contato</p>
+            <p class="section__eyebrow">06 — Contato</p>
             <h2 class="section__title">Bora criar algo juntos?</h2>
 
             <!-- ============ EDITE AQUI: seus contatos ============ -->

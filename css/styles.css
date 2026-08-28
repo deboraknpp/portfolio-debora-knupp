@@ -1095,6 +1095,56 @@ h1, h2, h3 {
                     linear-gradient(150deg, #6d5a34, #352c19 60%, #191410); }
 }
 
+/* ============ Perfis gerenciados: antes e depois ============
+   Cada par é um quadro na proporção de print de celular. A imagem entra por
+   background-image com um degradê depois da vírgula: enquanto o arquivo não
+   existir, aparece o degradê — nunca um buraco nem ícone de imagem quebrada. */
+.profiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: clamp(2.4rem, 5vw, 4rem);
+}
+.profile__head {
+  margin-bottom: 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+}
+.profile__name {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+.profile__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+.profile__shot { margin: 0; }
+.profile__img {
+  display: block;
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.86) contrast(1.02);
+  transition: filter 0.7s var(--ease);
+}
+.profile:hover .profile__img { filter: none; }
+.profile__cap {
+  margin-top: 0.75rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.profile__img--1-antes  { background-image: url("../assets/fotos/perfil-1-antes.jpg"),  linear-gradient(160deg, #2b2521, #191512); }
+.profile__img--1-depois { background-image: url("../assets/fotos/perfil-1-depois.jpg"), linear-gradient(160deg, #3a3128, #1d1814); }
+.profile__img--2-antes  { background-image: url("../assets/fotos/perfil-2-antes.jpg"),  linear-gradient(160deg, #262a28, #141817); }
+.profile__img--2-depois { background-image: url("../assets/fotos/perfil-2-depois.jpg"), linear-gradient(160deg, #333a35, #191e1b); }
+.profile__img--3-antes  { background-image: url("../assets/fotos/perfil-3-antes.jpg"),  linear-gradient(160deg, #2a2630, #16141b); }
+.profile__img--3-depois { background-image: url("../assets/fotos/perfil-3-depois.jpg"), linear-gradient(160deg, #383246, #1c1922); }
+
 /* ============ Fotos que abraçam a tela ============
    O problema da versão anterior era pintar o fundo POR CIMA da foto para
    dissolvê-la: gradiente é um retângulo, então sobrava uma emenda reta e a
