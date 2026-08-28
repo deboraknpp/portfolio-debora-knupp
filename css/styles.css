@@ -1095,60 +1095,87 @@ h1, h2, h3 {
                     linear-gradient(150deg, #6d5a34, #352c19 60%, #191410); }
 }
 
-/* Fotos que abraçam a tela, no desktop: em vez de uma caixa arredondada com
-   fundo sobrando ao lado, a foto ocupa a metade inteira, de topo a base, e um
-   degradê dissolve a borda interna no fundo — sem corte reto. Abaixo de
-   1000px o layout já vira coluna única, com a foto centralizada, então isto
-   fica restrito ao desktop. */
+/* ============ Fotos que abraçam a tela ============
+   O problema da versão anterior era pintar o fundo POR CIMA da foto para
+   dissolvê-la: gradiente é um retângulo, então sobrava uma emenda reta e a
+   foto voltava a parecer uma caixa. Aqui a borda é feita com máscara — quem
+   some é a própria foto, e o fundo real (com as brumas quentes) aparece por
+   baixo. Não há emenda porque não há nada pintado em cima. */
+
+/* --- Desktop: foto ocupa a lateral inteira, de topo a base --- */
 @media (min-width: 1001px) {
-  /* --- Hero --- */
   /* A figure sai do fluxo, mas a coluna do grid continua reservada (vazia):
      é ela que impede o texto de correr por baixo da foto. */
   .hero__figure {
     position: absolute;
     inset: 0 0 0 auto;
-    width: min(48%, 780px);
+    width: min(54%, 900px);
     aspect-ratio: auto;
     margin: 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.42) 22%, #000 54%);
+            mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.42) 22%, #000 54%);
   }
+  .hero__figure img { border-radius: 0; }
   .hero__col { position: relative; z-index: 1; }
   /* os números atravessavam as duas colunas: agora parariam sob a foto */
   .hero__stats { grid-column: 1; position: relative; z-index: 1; }
-  .hero__figure img { border-radius: 0; }
 
-  /* Borda esquerda dissolvida no fundo, e topo escurecido para o menu
-     continuar legível por cima da foto. */
+  /* Véu só no topo, para o menu continuar legível sobre a foto. Fica DENTRO
+     da máscara, então a esquerda dele também se dissolve. */
   .hero__figure::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background:
-      linear-gradient(90deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 62%, transparent) 22%, transparent 58%),
-      linear-gradient(180deg, color-mix(in srgb, var(--bg) 70%, transparent) 0%, transparent 24%);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 74%, transparent) 0%, transparent 26%);
   }
-  .hero__figure::after { border-radius: 0; height: 20%; }
+  .hero__figure::after { display: none; }
   .hero__dots { z-index: 2; }
 
-  /* --- Sobre --- */
+  /* --- Sobre: mesma ideia, espelhada --- */
   .about__media {
     position: absolute;
     inset: 0 auto 0 0;
-    width: min(42%, 640px);
+    width: min(46%, 700px);
     margin: 0;
+    -webkit-mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,0.42) 20%, #000 52%);
+            mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,0.42) 20%, #000 52%);
   }
   .about__media img {
     height: 100%;
     aspect-ratio: auto;
     border-radius: 0;
   }
-  /* mesma dissolução, espelhada: aqui é a borda direita que encosta no texto */
-  .about__media::after {
+}
+
+/* --- Celular: a foto deixa de ser um bloco de 300px abaixo do texto e passa
+   a ocupar o hero inteiro, com o texto por cima. A proporção 2:3 das fotos
+   cai bem numa tela vertical, então aqui quase nada se perde no corte. --- */
+@media (max-width: 1000px) {
+  .hero__figure {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    aspect-ratio: auto;
+    z-index: 0;
+  }
+  .hero__figure img { border-radius: 0; }
+  /* véu de cima a baixo: é ele que segura a legibilidade do texto */
+  .hero__figure::before {
     content: "";
     position: absolute;
     inset: 0;
+    z-index: 1;
     pointer-events: none;
-    background: linear-gradient(270deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 62%, transparent) 20%, transparent 55%);
+    background: linear-gradient(180deg,
+      color-mix(in srgb, var(--bg) 84%, transparent) 0%,
+      color-mix(in srgb, var(--bg) 62%, transparent) 42%,
+      color-mix(in srgb, var(--bg) 90%, transparent) 100%);
   }
+  .hero__figure::after { display: none; }
+  .hero__col, .hero__stats { position: relative; z-index: 1; }
+  .hero__dots { bottom: 12px; z-index: 2; }
 }
