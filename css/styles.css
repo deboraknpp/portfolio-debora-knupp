@@ -816,7 +816,9 @@ h1, h2, h3 {
   row-gap: 0;                    /* o espaço entre título e texto é do h2 */
   align-items: center;
 }
-.about__media { grid-column: 1; grid-row: 1 / span 2; }
+.about__media { grid-column: 1; grid-row: 1; }
+/* Se a coluna de texto voltar ao Sobre, a foto acompanha as duas linhas de novo */
+.about:has(.about__text) .about__media { grid-row: 1 / span 2; }
 .about__head, .about__text { grid-column: 2; }
 .about__media img {
   width: 100%;
