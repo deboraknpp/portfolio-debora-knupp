@@ -1159,11 +1159,14 @@ h1, h2, h3 {
   .hero__figure {
     position: absolute;
     inset: 0 0 0 auto;
-    width: min(54%, 900px);
+    width: min(60%, 1000px);
     aspect-ratio: auto;
     margin: 0;
-    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.42) 22%, #000 54%);
-            mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.42) 22%, #000 54%);
+    pointer-events: none;   /* a foto chega perto do texto: não pode roubar o clique */
+    /* Esfumado longo: a foto só fica opaca lá pelos 70% da própria largura, então
+       a cor do fundo entra por dentro dela e a passagem vira contínua. */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.22) 20%, rgba(0,0,0,0.66) 45%, #000 72%);
+            mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.22) 20%, rgba(0,0,0,0.66) 45%, #000 72%);
   }
   .hero__figure img { border-radius: 0; }
   .hero__col { position: relative; z-index: 1; }
@@ -1187,10 +1190,11 @@ h1, h2, h3 {
   .about__media {
     position: absolute;
     inset: 0 auto 0 0;
-    width: min(46%, 700px);
+    width: min(52%, 820px);
     margin: 0;
-    -webkit-mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,0.42) 20%, #000 52%);
-            mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,0.42) 20%, #000 52%);
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,0.22) 18%, rgba(0,0,0,0.66) 44%, #000 72%);
+            mask-image: linear-gradient(270deg, transparent 0%, rgba(0,0,0,0.22) 18%, rgba(0,0,0,0.66) 44%, #000 72%);
   }
   .about__media img {
     height: 100%;
