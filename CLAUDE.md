@@ -84,6 +84,7 @@ some, vídeo não toca):
 | `assets/reels/reel-N.mp4` | previews da seção Social (N de 1 a 10) |
 | `assets/fotos/hero.jpg`, `hero-2.jpg`, `hero-3.jpg` | carrossel do hero |
 | `assets/fotos/perfil.jpg` | foto da seção Sobre |
+| `assets/fotos/perfil-N-antes.jpg` + `perfil-N-depois.jpg` | pares do "Antes e depois", no fim de Social media |
 | `assets/fotos/NOME.jpeg` + `NOME-sm.jpeg` + `.work__thumb--NOME` no CSS | capa de cada trabalho em Destaques — a `-sm` e a que o celular carrega |
 | `assets/curriculo-debora-knupp.pdf` | currículo, link na seção Contato (fora de `fotos/`, na raiz de `assets/`) |
 
@@ -242,6 +243,18 @@ sozinhas nas pontas — e também quando não há o que rolar.
 (agosto/2026). No celular ela é o mesmo mosaico do PC em duas colunas, descendo:
 células de ~165×118, a proporção deitada das do PC, com as fotos altas ocupando
 duas linhas. Rolar de lado escondia foto, e ela quis todas na tela.
+
+### O "Antes e depois" mora dentro de Social media
+
+Os pares antes/depois dos perfis gerenciados (`.profiles`) já foram a seção
+`#perfis`, com eyebrow `04 — Perfis` e item próprio no menu. A pedido da titular
+(agosto/2026) viraram o **fim** da seção `#social`: saíram a `<section>`, o link do
+menu e o número, e as seções seguintes voltaram a `04 — Sobre` e `05 — Contato`.
+
+O que separa os dois assuntos agora é `.subsection__head` — um fio de 1px em cima
+e um `<h3 class="subsection__title">`, um degrau abaixo do `.section__title`. É a
+forma de abrir assunto novo sem inventar seção nem gastar mais um número. O CSS
+dos perfis foi junto para a seção 7 (Widget Social) da folha.
 
 ### O Sobre tem três filhos, não dois
 
