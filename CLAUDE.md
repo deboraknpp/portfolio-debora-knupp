@@ -20,7 +20,7 @@ npx serve .          # ou python -m http.server 5173
 
 **Nunca abra o `index.html` com duplo clique.** Em `file:///` o embed do YouTube
 rejeita a origem com **erro 153** e mostra uma tela de erro no lugar do vídeo. Não é
-bug do código: em HTTP (localhost ou Netlify) o mesmo embed funciona.
+bug do código: em HTTP (localhost, GitHub Pages ou Netlify) o mesmo embed funciona.
 
 Na prática o site já está no ar, então o mais rápido é conferir direto lá — ver
 "Deploy" no fim deste arquivo. **O titular prefere conferir o visual por conta
@@ -263,25 +263,58 @@ linha por precaução.
 
 ## Deploy
 
-O site está **no ar e publicado automaticamente**:
+O site está no ar em **dois endereços ao mesmo tempo**, ambos servindo a raiz do
+repositório, sem build:
 
 | | |
 |---|---|
 | Repositório | https://github.com/deboraknpp/portfolio-debora-knupp (público) |
-| Site | https://debora-knupp.netlify.app |
-| Publicação | Netlify ligada ao GitHub — todo push na `main` republica em ~30s |
+| Publicação principal | https://deboraknpp.github.io/portfolio-debora-knupp/ — GitHub Pages, republica a cada push em ~1 min, **sem limite** |
+| Publicação secundária | https://debora-knupp.netlify.app — Netlify, hoje **congelada** (ver abaixo) |
 
-`netlify.toml` define `publish = "."` e nenhum comando de build. Como a raiz inteira
-é servida, **tudo que entra no Git fica público na web** — foi por isso que os
-originais saíram para `assets/originais/`. O [README.md](README.md) tem o passo a
-passo voltado ao usuário final.
+`netlify.toml` define `publish = "."` e nenhum comando de build; o Pages serve a
+raiz do mesmo jeito. Como a raiz inteira é servida, **tudo que entra no Git fica
+público na web** — foi por isso que os originais saíram para `assets/originais/`.
+O [README.md](README.md) tem o passo a passo voltado ao usuário final.
 
-Para publicar uma alteração: `git add -A && git commit -m "..." && git push`. Não
-existe passo manual na Netlify. Depois vale confirmar no ar, sem abrir navegador:
+Para publicar: `git add -A && git commit -m "..." && git push`. Não existe passo
+manual em nenhum dos dois. Depois vale confirmar no ar, sem abrir navegador:
 
 ```bash
-curl -s -o /dev/null -w '%{http_code}\n' https://debora-knupp.netlify.app/CAMINHO
+curl -s -o /dev/null -w '%{http_code}\n' https://deboraknpp.github.io/portfolio-debora-knupp/CAMINHO
 ```
+
+### Por que o Pages entrou (agosto/2026)
+
+O plano grátis da Netlify dá **300 créditos por mês, e cada deploy de produção
+custa 15** — ou seja, **20 publicações mensais**. Em 28/08/2026 os créditos
+acabaram depois de 21 deploys em 6 dias e a Netlify **pausou os deploys de
+produção**: o site continuou no ar servindo o commit `e03a0cf`, mas os quatro
+commits seguintes ficaram marcados como `Skipped due to account credit usage
+exceeded`. Nesse estado nem o botão "Trigger deploy" nem o arrastar-pasta do
+painel funcionam — o bloqueio é de qualquer publicação, não só de build.
+
+Daí o GitHub Pages, ligado em *Settings → Pages → Deploy from a branch → `main`
+→ `/ (root)`*, na conta `deboraknpp`. Não há workflow do Actions envolvido.
+
+Os créditos renovam por volta de **22/09/2026**. Para a Netlify voltar ao estado
+atual do `main` basta **um clique em "Trigger deploy"**: ela publica o HEAD, não
+commit por commit, então um único deploy (15 créditos) recupera tudo o que ficou
+para trás. Se o site voltar a ser editado com frequência, `[skip ci]` na mensagem
+do commit faz a Netlify ignorar o push sem gastar crédito.
+
+### Caminho relativo é o que mantém os dois no ar
+
+O Pages serve o site numa subpasta (`/portfolio-debora-knupp/`); a Netlify serve
+na raiz. Funciona nos dois porque **todo caminho do site é relativo**
+(`assets/fotos/…`, `css/styles.css`, sem barra inicial). **Trocar um caminho para
+absoluto (`/assets/…`) quebra o Pages e não quebra a Netlify** — é o erro mais
+fácil de cometer aqui, e ele passa despercebido em teste local na raiz.
+
+O que o Pages não faz: as regras do `netlify.toml` — cache longo de `/assets/*` e
+os cabeçalhos de segurança — não valem lá. O site funciona igual, só sem essa
+otimização na visita repetida. O `.nojekyll` na raiz impede o processamento como
+blog Jekyll; hoje é só precaução, já que não há arquivo começando com `_`.
 
 ### A armadilha das duas contas do GitHub
 
