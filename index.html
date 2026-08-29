@@ -391,17 +391,26 @@
         </div>
 
         <!-- ============ EDITE AQUI: perfis gerenciados ============
-             Troque "Perfil N" pelo nome real de cada conta. As imagens entram
-             em assets/fotos/ com estes nomes exatos:
+             Em cada <article>, três coisas para trocar:
+               1. o href  -> https://www.instagram.com/USUARIO/
+               2. o @     -> o mesmo usuário, com arroba
+               3. o aria-label -> o mesmo @, para quem usa leitor de tela
+             As imagens entram em assets/fotos/ com estes nomes exatos:
+                 perfil-N-avatar.jpg    a foto de perfil, quadrada
                  perfil-N-antes.jpg     perfil-N-depois.jpg
              Enquanto o arquivo não existir, o quadro mostra um degradê — nunca
              uma imagem quebrada. Para acrescentar um perfil, copie um <article>
              inteiro, troque o número e some as linhas correspondentes no CSS
-             (.profile__img--N-*) e no .gitignore. -->
+             (.profile__avatar--N e .profile__img--N-*) e no .gitignore. -->
         <div class="profiles">
           <article class="profile reveal">
             <header class="profile__head">
-              <h3 class="profile__name">Perfil 1</h3>
+              <h3 class="profile__name">
+                <a class="profile__id" href="https://www.instagram.com/deboraknpp/" target="_blank" rel="noopener" aria-label="Abrir @deboraknpp no Instagram">
+                  <span class="profile__avatar profile__avatar--1" aria-hidden="true"></span>
+                  <span class="profile__handle">@deboraknpp</span>
+                </a>
+              </h3>
             </header>
             <div class="profile__pair">
               <figure class="profile__shot">
@@ -416,7 +425,12 @@
           </article>
           <article class="profile reveal">
             <header class="profile__head">
-              <h3 class="profile__name">Perfil 2</h3>
+              <h3 class="profile__name">
+                <a class="profile__id" href="https://www.instagram.com/adventistasulrondonia/" target="_blank" rel="noopener" aria-label="Abrir @adventistasulrondonia no Instagram">
+                  <span class="profile__avatar profile__avatar--2" aria-hidden="true"></span>
+                  <span class="profile__handle">@adventistasulrondonia</span>
+                </a>
+              </h3>
             </header>
             <div class="profile__pair">
               <figure class="profile__shot">
@@ -431,7 +445,12 @@
           </article>
           <article class="profile reveal">
             <header class="profile__head">
-              <h3 class="profile__name">Perfil 3</h3>
+              <h3 class="profile__name">
+                <a class="profile__id" href="https://www.instagram.com/missoesnoroeste/" target="_blank" rel="noopener" aria-label="Abrir @missoesnoroeste no Instagram">
+                  <span class="profile__avatar profile__avatar--3" aria-hidden="true"></span>
+                  <span class="profile__handle">@missoesnoroeste</span>
+                </a>
+              </h3>
             </header>
             <div class="profile__pair">
               <figure class="profile__shot">

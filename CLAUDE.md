@@ -57,6 +57,10 @@ ffmpeg -y -i ORIGINAL.mp4 -t 6 -an -vf "scale=-2:1280,fps=30" -c:v libx264 -crf 
 ffmpeg -y -i ORIGINAL.jpg -q:v 4 assets/fotos/NOME.jpeg
 ffmpeg -y -i ORIGINAL.jpg -vf "scale=900:-2" -q:v 4 assets/fotos/NOME-sm.jpeg
 
+# Foto de perfil do "Antes e depois": quadrado de 200px a partir de um print
+#   crop=menor lado, centralizado — o CSS mostra a 46px, então 200 cobre a tela retina
+ffmpeg -y -i PRINT.png -vf "crop='min(iw,ih)':'min(iw,ih)',scale=200:200" -q:v 3 assets/fotos/perfil-N-avatar.jpg
+
 # Foto do carrossel do hero: 2:3, 934px de largura
 ffmpeg -y -i ORIGINAL.jpg -vf "scale=934:-2" -q:v 3 assets/fotos/hero-N.jpg
 ```
@@ -84,6 +88,7 @@ some, vídeo não toca):
 | `assets/reels/reel-N.mp4` | previews da seção Social (N de 1 a 10) |
 | `assets/fotos/hero.jpg`, `hero-2.jpg`, `hero-3.jpg` | carrossel do hero |
 | `assets/fotos/perfil.jpg` | foto da seção Sobre |
+| `assets/fotos/perfil-N-avatar.jpg` | foto de perfil de cada conta do "Antes e depois" — quadrada |
 | `assets/fotos/perfil-N-antes.jpg` + `perfil-N-depois.jpg` | pares do "Antes e depois", no fim de Social media |
 | `assets/fotos/NOME.jpeg` + `NOME-sm.jpeg` + `.work__thumb--NOME` no CSS | capa de cada trabalho em Destaques — a `-sm` e a que o celular carrega |
 | `assets/curriculo-debora-knupp.pdf` | currículo, link na seção Contato (fora de `fotos/`, na raiz de `assets/`) |
@@ -166,6 +171,11 @@ com algo verossímil.
 
 Ainda há valores por confirmar com a Débora: os números da seção Social e do hero, e
 as legendas da galeria (a maioria está com o genérico "Cobertura de evento").
+
+No "Antes e depois" as três contas são reais e vieram dela — **@deboraknpp**,
+**@adventistasulrondonia** e **@missoesnoroeste**, nessa ordem — e as fotos de
+perfil já estão no repositório. O que falta ali são só os prints de antes e
+depois: enquanto não chegam, os seis quadros mostram degradê.
 
 Divergência aberta: o currículo dela escreve a série como **"Extraordinários"**
 (plural) e o site usa **"Extraordinário"** (singular). Um dos dois está errado —
@@ -250,6 +260,12 @@ Os pares antes/depois dos perfis gerenciados (`.profiles`) já foram a seção
 `#perfis`, com eyebrow `04 — Perfis` e item próprio no menu. A pedido da titular
 (agosto/2026) viraram o **fim** da seção `#social`: saíram a `<section>`, o link do
 menu e o número, e as seções seguintes voltaram a `04 — Sobre` e `05 — Contato`.
+
+Cada perfil se apresenta pela **foto de perfil e o @**, não por um rótulo: o `<h3>`
+guarda só a semântica de título e quem desenha é o `.profile__id`, um link único
+para `instagram.com/USUARIO` cobrindo o avatar e o arroba. Trocar um perfil é mexer
+em três pontos do `<article>` — o `href`, o texto do `.profile__handle` e o
+`aria-label` — mais a linha `.profile__avatar--N` no CSS.
 
 O que separa os dois assuntos agora é `.subsection__head` — um fio de 1px em cima
 e um `<h3 class="subsection__title">`, um degrau abaixo do `.section__title`. É a

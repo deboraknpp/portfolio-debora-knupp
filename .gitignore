@@ -36,7 +36,8 @@ assets/fotos/*
 !assets/fotos/hero-2.jpg
 !assets/fotos/hero-3.jpg
 !assets/fotos/perfil.jpg
-# Prints dos perfis gerenciados (antes/depois), no fim de "03 — Social media"
+# Perfis gerenciados no fim de "03 — Social media": foto de perfil e antes/depois
+!assets/fotos/perfil-*-avatar.jpg
 !assets/fotos/perfil-*-antes.jpg
 !assets/fotos/perfil-*-depois.jpg
 !assets/fotos/extraordinario.jpeg
