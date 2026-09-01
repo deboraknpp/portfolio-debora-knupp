@@ -914,9 +914,9 @@ h1, h2, h3 {
 
 .profile__img--1-antes  { background-image: url("../assets/fotos/perfil-1-antes.jpg"),  linear-gradient(160deg, #2b2521, #191512); }
 .profile__img--1-depois { background-image: url("../assets/fotos/perfil-1-depois.jpg"), linear-gradient(160deg, #3a3128, #1d1814); }
-.profile__img--2-antes  { background-image: url("../assets/fotos/perfil-2-antes.jpg?v=2"),  linear-gradient(160deg, #262a28, #141817); }
+.profile__img--2-antes  { background-image: url("../assets/fotos/perfil-2-antes.jpg?v=3"),  linear-gradient(160deg, #262a28, #141817); }
 .profile__img--2-depois { background-image: url("../assets/fotos/perfil-2-depois.jpg"), linear-gradient(160deg, #333a35, #191e1b); }
-.profile__img--3-antes  { background-image: url("../assets/fotos/perfil-3-antes.jpg?v=2"),  linear-gradient(160deg, #2a2630, #16141b); }
+.profile__img--3-antes  { background-image: url("../assets/fotos/perfil-3-antes.jpg?v=3"),  linear-gradient(160deg, #2a2630, #16141b); }
 .profile__img--3-depois { background-image: url("../assets/fotos/perfil-3-depois.jpg"), linear-gradient(160deg, #383246, #1c1922); }
 
 /* ============ 8. SOBRE / CONTATO / FOOTER ============ */
