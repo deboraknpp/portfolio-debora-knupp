@@ -140,7 +140,8 @@ h1, h2, h3 {
 .subsection__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+  /* mesmo corpo dos títulos de seção: ela pediu o mesmo tamanho */
+  font-size: clamp(2.2rem, 5.6vw, 4rem);
   line-height: 1.15;
 }
 
