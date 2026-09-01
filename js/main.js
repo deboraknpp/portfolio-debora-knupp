@@ -172,17 +172,30 @@
   }
 
   /* ---------------------------------------------------------------
-     7. LIGHTBOX DA GALERIA DE FOTOS
-     Funciona tanto com <img> quanto com os placeholders coloridos.
+     7. LIGHTBOX — galeria de fotos e quadros de antes/depois
+     Funciona com <img>, com os placeholders coloridos e com os quadros
+     que são só background no CSS. Duas coleções usam o mesmo visor: a
+     galeria e o antes/depois; `grupo` guarda qual foi aberta, para as
+     setas andarem dentro dela e não misturarem as duas.
      --------------------------------------------------------------- */
   const lightbox = $("#lightbox");
   const stage = $("#lightbox-stage");
   const caption = $("#lightbox-caption");
   const shots = $$("#gallery .shot");
+  const profileShots = $$(".profile__shot");
+  let grupo = shots;
   let current = 0;
 
+  // O quadro pode não ter arquivo ainda: aí vale o degradê do próprio card,
+  // igual à página, em vez do ícone de imagem quebrada.
+  const mostrarFallback = (shot) => {
+    const ph = $(".shot__ph, .profile__img", shot);
+    stage.innerHTML = "";
+    stage.style.backgroundImage = ph ? getComputedStyle(ph).backgroundImage : "";
+  };
+
   const renderShot = (index) => {
-    const shot = shots[index];
+    const shot = grupo[index];
     if (!shot) return;
     current = index;
 
@@ -192,17 +205,17 @@
     if (full) {
       stage.style.backgroundImage = "";
       stage.innerHTML = `<img src="${full}" alt="${shot.dataset.caption || ""}" />`;
+      $("img", stage).addEventListener("error", () => mostrarFallback(shot));
     } else {
-      const ph = $(".shot__ph", shot);
-      stage.innerHTML = "";
-      stage.style.backgroundImage = ph ? getComputedStyle(ph).backgroundImage : "";
+      mostrarFallback(shot);
     }
-    caption.textContent = `${shot.dataset.caption || ""}  (${index + 1}/${shots.length})`;
+    caption.textContent = `${shot.dataset.caption || ""}  (${index + 1}/${grupo.length})`;
   };
 
-  const openLightbox = (index) => {
+  const openLightbox = (lista, index) => {
     if (!lightbox) return;
     lastFocused = document.activeElement;
+    grupo = lista;
     renderShot(index);
     lightbox.hidden = false;
     document.body.style.overflow = "hidden";
@@ -217,9 +230,10 @@
     if (lastFocused) lastFocused.focus();
   };
 
-  const step = (dir) => renderShot((current + dir + shots.length) % shots.length);
+  const step = (dir) => renderShot((current + dir + grupo.length) % grupo.length);
 
-  shots.forEach((shot, i) => shot.addEventListener("click", () => openLightbox(i)));
+  shots.forEach((shot, i) => shot.addEventListener("click", () => openLightbox(shots, i)));
+  profileShots.forEach((shot, i) => shot.addEventListener("click", () => openLightbox(profileShots, i)));
 
   if (lightbox) {
     $(".lightbox__close", lightbox).addEventListener("click", closeLightbox);

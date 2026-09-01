@@ -57,12 +57,22 @@ ffmpeg -y -i ORIGINAL.mp4 -t 6 -an -vf "scale=-2:1280,fps=30" -c:v libx264 -crf 
 ffmpeg -y -i ORIGINAL.jpg -q:v 4 assets/fotos/NOME.jpeg
 ffmpeg -y -i ORIGINAL.jpg -vf "scale=900:-2" -q:v 4 assets/fotos/NOME-sm.jpeg
 
-# Antes/depois: print de celular sem a barra de status nem a barra de abas do app
-#   O quadro no site é 9:16 com "cover", e o print inteiro é ~1:2,16 — se entrar
-#   cru, o navegador corta as pontas. Recorte o topo e o rodapé do sistema e termine
-#   no fim de uma linha da grade. Os números mudam com o aparelho; abaixo, um print
-#   de 1242x2688. 440px de largura chega: o quadro aparece com ~180px na tela.
-ffmpeg -y -i PRINT.png -vf "crop=1242:2300:0:149,scale=440:-2" -q:v 4 assets/fotos/perfil-N-antes.jpg
+# Antes/depois: print de celular recortado em 9:16, com o @ na mesma altura
+#   Os prints vêm de aparelhos diferentes, então a régua não é o topo da imagem:
+#   é a linha do @ dentro do print. Meça onde ela está no original (uma grade
+#   ajuda: -vf "drawgrid=w=iw:h=50:t=2:c=red") e escolha o corte para ela cair
+#   a ~22px do topo depois de reduzir para 440px. A conta é
+#       corte_topo = y_do_@ - 22 * (largura_do_corte / 440)
+#   e a altura do corte é largura*16/9, o que já descarta a barra de status em
+#   cima e a barra de abas do app embaixo. 440px basta: o quadro aparece com
+#   ~180px na tela. Exemplo real, de um print de 1242x2688 com o @ em y=197:
+ffmpeg -y -i PRINT.png -vf "crop=1242:2208:0:134,scale=440:-2" -q:v 4 assets/fotos/perfil-N-antes.jpg
+
+#   Quando o print JÁ vem recortado e não sobra margem acima do @, complete com
+#   branco antes de cortar. Duas armadilhas do filtro pad: as dimensões de saída
+#   precisam ser PARES (com largura ímpar ele recusa dizendo, enganosamente, que
+#   o destino é menor que a origem) e o deslocamento também.
+ffmpeg -y -i PRINT.jpeg -vf "pad=1242:2014:0:18:color=white,crop=1132:2012:54:0,scale=440:-2" -q:v 4 assets/fotos/perfil-N-depois.jpg
 
 # Foto de perfil do "Antes e depois": quadrado de 200px a partir de um print
 #   crop=menor lado, centralizado — o CSS mostra a 46px, então 200 cobre a tela retina
@@ -280,6 +290,13 @@ guarda só a semântica de título e quem desenha é o `.profile__id`, um link �
 para `instagram.com/USUARIO` cobrindo o avatar e o arroba. Trocar um perfil é mexer
 em três pontos do `<article>` — o `href`, o texto do `.profile__handle` e o
 `aria-label` — mais a linha `.profile__avatar--N` no CSS.
+
+Clicar num quadro abre a imagem inteira no **mesmo lightbox da galeria**. O bloco 7
+do JS atende duas coleções — `#gallery .shot` e `.profile__shot` — e a variável
+`grupo` guarda qual foi aberta, para as setas andarem dentro dela. Por isso o quadro
+é um `<button>` com `data-full` e `data-caption`, e não mais um `<figure>`. Se o
+arquivo não existir, um ouvinte de `error` troca a imagem pelo degradê do próprio
+card em vez de deixar o ícone de imagem quebrada.
 
 O que separa os dois assuntos agora é `.subsection__head` — um fio de 1px em cima
 e um `<h3 class="subsection__title">`, um degrau abaixo do `.section__title`. É a

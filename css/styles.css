@@ -872,7 +872,18 @@ h1, h2, h3 {
   grid-template-columns: 1fr 1fr;
   gap: 0.9rem;
 }
-.profile__shot { margin: 0; }
+/* Botão, não <figure>: clicar abre o quadro inteiro no lightbox da galeria.
+   Daí o reset — o botão herda fonte e cor do site e não desenha caixa nenhuma. */
+.profile__shot {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: left;
+  cursor: zoom-in;
+}
 .profile__img {
   display: block;
   aspect-ratio: 9 / 16;
@@ -884,6 +895,7 @@ h1, h2, h3 {
 }
 .profile:hover .profile__img { filter: none; }
 .profile__cap {
+  display: block;
   margin-top: 0.75rem;
   font-size: 0.64rem;
   letter-spacing: 0.24em;
