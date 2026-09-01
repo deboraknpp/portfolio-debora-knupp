@@ -71,8 +71,12 @@ ffmpeg -y -i PRINT.png -vf "crop=1242:2208:0:134,scale=440:-2" -q:v 4 assets/fot
 #   Quando o print JÁ vem recortado e não sobra margem acima do @, complete com
 #   branco antes de cortar. Duas armadilhas do filtro pad: as dimensões de saída
 #   precisam ser PARES (com largura ímpar ele recusa dizendo, enganosamente, que
-#   o destino é menor que a origem) e o deslocamento também.
-ffmpeg -y -i PRINT.jpeg -vf "pad=1242:2014:0:18:color=white,crop=1132:2012:54:0,scale=440:-2" -q:v 4 assets/fotos/perfil-N-depois.jpg
+#   o destino é menor que a origem) e o deslocamento também. E se o corte também
+#   estreitar a imagem, não centralize por reflexo: o Instagram tem margem à
+#   esquerda e quase nada à direita, então tirar metade de cada lado encosta a
+#   foto de perfil na borda. Puxe o corte para a esquerda (o x abaixo é 20, não
+#   os 54 do centro) e o cartão fica igual aos que usam a largura inteira.
+ffmpeg -y -i PRINT.jpeg -vf "pad=1242:2014:0:18:color=white,crop=1132:2012:20:0,scale=440:-2" -q:v 4 assets/fotos/perfil-N-depois.jpg
 
 # Foto de perfil do "Antes e depois": quadrado de 200px a partir de um print
 #   crop=menor lado, centralizado — o CSS mostra a 46px, então 200 cobre a tela retina
