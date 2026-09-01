@@ -57,6 +57,13 @@ ffmpeg -y -i ORIGINAL.mp4 -t 6 -an -vf "scale=-2:1280,fps=30" -c:v libx264 -crf 
 ffmpeg -y -i ORIGINAL.jpg -q:v 4 assets/fotos/NOME.jpeg
 ffmpeg -y -i ORIGINAL.jpg -vf "scale=900:-2" -q:v 4 assets/fotos/NOME-sm.jpeg
 
+# Antes/depois: print de celular sem a barra de status nem a barra de abas do app
+#   O quadro no site é 9:16 com "cover", e o print inteiro é ~1:2,16 — se entrar
+#   cru, o navegador corta as pontas. Recorte o topo e o rodapé do sistema e termine
+#   no fim de uma linha da grade. Os números mudam com o aparelho; abaixo, um print
+#   de 1242x2688. 440px de largura chega: o quadro aparece com ~180px na tela.
+ffmpeg -y -i PRINT.png -vf "crop=1242:2300:0:149,scale=440:-2" -q:v 4 assets/fotos/perfil-N-antes.jpg
+
 # Foto de perfil do "Antes e depois": quadrado de 200px a partir de um print
 #   crop=menor lado, centralizado — o CSS mostra a 46px, então 200 cobre a tela retina
 ffmpeg -y -i PRINT.png -vf "crop='min(iw,ih)':'min(iw,ih)',scale=200:200" -q:v 3 assets/fotos/perfil-N-avatar.jpg
@@ -172,9 +179,9 @@ com algo verossímil.
 Ainda há valores por confirmar com a Débora: os números da seção Social e do hero, e
 as legendas da galeria (a maioria está com o genérico "Cobertura de evento").
 
-No "Antes e depois" as três contas são reais e vieram dela — **@deboraknpp**,
-**@adventistasulrondonia** e **@missoesnoroeste**, nessa ordem — e as fotos de
-perfil já estão no repositório. O que falta ali são só os prints de antes e
+No "Antes e depois" as três contas são reais e vieram dela, nesta ordem —
+**@adventistasulrondonia** (perfil-1), **@missoesnoroeste** (perfil-2) e
+**@deboraknpp** (perfil-3) — e as fotos de perfil já estão no repositório. O que falta ali são só os prints de antes e
 depois: enquanto não chegam, os seis quadros mostram degradê.
 
 Divergência aberta: o currículo dela escreve a série como **"Extraordinários"**
@@ -208,6 +215,13 @@ celular caiu de **~3,1 MB para ~600 KB** assim:
   o `inset: -50%` antigo só multiplicava a área a rasterizar.
 - **No celular o header rolado não usa `backdrop-filter`** — esse sim recalcula a
   cada quadro de rolagem. Fundo a 96% de opacidade dá o mesmo resultado de graça.
+
+**Os seis quadros de antes/depois são `background-image`, como as capas de
+Destaques — ou seja, baixam no primeiro carregamento mesmo estando no fim da
+página.** Por isso saem a 440px e `-q:v 4`, ~85 KB cada. Com os seis no ar são
+~500 KB, quase o dobro do site inteiro hoje: se pesar, o caminho é trocar o
+`<span>` por `<img loading="lazy">` mantendo o degradê no `background` do
+próprio `img`, para o quadro não virar buraco quando o arquivo faltar.
 
 Os reels seguem com `preload="none"`: só baixam quando o card entra na tela, e nem
 isso se o aparelho estiver em "economia de dados" (`navigator.connection.saveData`).
