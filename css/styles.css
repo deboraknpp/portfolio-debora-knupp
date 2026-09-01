@@ -860,9 +860,12 @@ h1, h2, h3 {
      quebre em duas linhas em vez de empurrar o cartão para fora. */
   min-width: 0;
   overflow-wrap: anywhere;
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  line-height: 1.2;
+  /* Fonte de texto (Inter), a mesma do rótulo "03 — Social media": @ de rede
+     social pede sans, não a serifada dos títulos. Peso 400 já é carregado. */
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
   transition: color 0.4s var(--ease);
 }
 .profile__id:hover .profile__avatar { filter: none; border-color: var(--accent); }
